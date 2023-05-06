@@ -62,19 +62,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NAV] = LAYOUT_split_3x5_2(
       KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
-      KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
-      CTL_S  , CTL_R  , CTL_C  , CTL_A  , CTL_V  ,       TWM_TAB, CTL_BS , KC_TAB , CTL_L  , CTL_T ,
-      KC_TRNS, MO(_TWM), MO(_NUM), KC_TRNS),
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
+      CTL_S  , CTL_R  , CTL_C  , CTL_V  , CTL_A  ,       TWM_TAB, CTL_BS , KC_TAB , CTL_L  , CTL_T ,
+      KC_TRNS, KC_TRNS, KC_LSFT, MO(_NUM)),
 
    [_SYM] = LAYOUT_split_3x5_2(
       KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
       UPDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, KC_NO  ,
-      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+      MO(_TWM), KC_TRNS, KC_TRNS, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
       KC_NO  , KC_3  , KC_4   , KC_7, KC_NO,             KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
-      KC_9   , KC_0  , KC_1   , KC_2, KC_NO,             KC_NO, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
+      KC_9   , KC_0  , KC_1   , KC_2, KC_NO,             KC_NO, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       KC_NO  , KC_5  , KC_6   , KC_8, KC_NO,             KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 
