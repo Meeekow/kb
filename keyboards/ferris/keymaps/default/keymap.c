@@ -60,7 +60,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
       OS_NAV, KC_SPC, KC_BSPC, LT(_SYM, OS_SFT)),
 
-
    [_NAV] = LAYOUT_split_3x5_2(
       KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
       KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
@@ -80,10 +79,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
 
    [_TWM] = LAYOUT_split_3x5_2(
-      TWM_S1  , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,      TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
-      KC_NO   , TWM_TER, TWM_RET, TWM_RUN, KC_NO  ,      TWM_H  , TWM_J  , TWM_K  , TWM_L  , TWM_C   ,
-      KC_NO   , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,      KC_NO  , KC_NO  , KC_NO  , KC_NO  , TWM_SSQ ,
-      KC_TRNS , KC_TRNS, KC_LSFT, KC_LCTL),
+      TWM_S1 , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,       TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
+      KC_NO  , TWM_TER, TWM_RET, TWM_RUN, KC_NO  ,       TWM_H  , TWM_J  , TWM_K  , TWM_L  , TWM_C   ,
+      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , TWM_SSQ ,
+      KC_TRNS, KC_TRNS, KC_LSFT, KC_LCTL),
 
    [_EXT] = LAYOUT_split_3x5_2(
       QK_BOOT, KC_NO, KC_NO, KC_NO, KC_TRNS,             KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,
@@ -117,7 +116,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    if (!update_flow(keycode, record->event.pressed, record->event.key)) return false;
 
    switch (keycode) {
-
     case LT(_SYM, OS_SFT): // SHIFT on tap; Access SYM layer on hold
         if (record->tap.count > 0) {
             if (record->event.pressed) {
