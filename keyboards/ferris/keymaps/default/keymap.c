@@ -15,6 +15,7 @@ enum keycodes {
    TAB_BCK ,
    TAB_FWD ,
    UPDIR   ,
+   CDDIR   ,
    OS_NAV  ,
    OS_NUM  ,
    OS_TWM  ,
@@ -69,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_SYM] = LAYOUT_split_3x5_2(
       KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
-      UPDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, KC_NO  ,
+      CDDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, UPDIR  ,
       MO(_TWM), KC_TRNS, KC_TRNS, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -188,6 +189,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     case TAB_FWD: // CTRL + TAB
         if (record->event.pressed) {
             SEND_STRING(SS_LCTL(SS_TAP(X_TAB)));
+        }
+        break;
+
+    case CDDIR: // MACRO FOR "~/"
+        if (record->event.pressed) {
+            SEND_STRING("~/");
         }
         break;
 
