@@ -4,7 +4,6 @@
 
 enum keycodes {
    CTL_BS = SAFE_RANGE,
-   CTL_A   ,
    CTL_C   ,
    CTL_L   ,
    CTL_R   ,
@@ -17,6 +16,7 @@ enum keycodes {
    UPDIR   ,
    CDDIR   ,
    OS_NAV  ,
+   OS_SYM  ,
    OS_NUM  ,
    OS_TWM  ,
    OS_EXT  ,
@@ -33,7 +33,6 @@ enum keycodes {
    TWM_TER ,
    TWM_RET ,
    TWM_RUN ,
-   TWM_TAB ,
    TWM_H   ,
    TWM_J   ,
    TWM_K   ,
@@ -59,12 +58,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_NAV, KC_SPC, KC_BSPC, LT(_SYM, OS_SFT)),
+      OS_NAV, KC_SPC, KC_BSPC, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
       KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
-      CTL_S  , CTL_R  , CTL_C  , CTL_V  , CTL_A  ,       TWM_TAB, CTL_BS , KC_TAB , CTL_L  , CTL_T ,
+      CTL_S  , CTL_R  , CTL_C  , CTL_V  , TWM_K  ,       TWM_RUN, CTL_BS , KC_TAB , CTL_L  , CTL_T ,
       KC_TRNS, KC_TRNS, KC_LSFT, MO(_NUM)),
 
    [_SYM] = LAYOUT_split_3x5_2(
@@ -109,6 +108,7 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
 // * layer name
 const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
     {OS_NAV, _NAV},
+    {OS_SYM, _SYM},
     {OS_EXT, _EXT},
 };
 
@@ -117,6 +117,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    if (!update_flow(keycode, record->event.pressed, record->event.key)) return false;
 
    switch (keycode) {
+    /*
     case LT(_SYM, OS_SFT): // SHIFT on tap; Access SYM layer on hold
         if (record->tap.count > 0) {
             if (record->event.pressed) {
@@ -125,16 +126,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             return false;
         }
         break;
+    */
 
     case CTL_BS: // CTRL + BACKSPACE
         if (record->event.pressed) {
             SEND_STRING(SS_LCTL(SS_TAP(X_BSPC)));
-        }
-        break;
-
-    case CTL_A: // CTRL + A
-        if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_A)));
         }
         break;
 
@@ -310,15 +306,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
           register_code(KC_LGUI);
           register_code(KC_P);
           unregister_code(KC_P);
-          unregister_code(KC_LGUI);
-        }
-        break;
-
-    case TWM_TAB:
-        if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_TAB);
-          unregister_code(KC_TAB);
           unregister_code(KC_LGUI);
         }
         break;

@@ -65,5 +65,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define FLOW_COUNT 4
 
 // flow_layers_config
-#define FLOW_LAYERS_COUNT 2
+#define FLOW_LAYERS_COUNT 3
 
