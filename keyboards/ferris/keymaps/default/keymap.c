@@ -12,6 +12,7 @@ enum keycodes {
    CTL_T   ,
    CTL_V   ,
    CTL_W   ,
+   CTL_VES ,
    TAB_BCK ,
    TAB_FWD ,
    UPDIR   ,
@@ -64,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_NAV] = LAYOUT_split_3x5_2(
       KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
-      CTL_S  , CTL_R  , CTL_C  , CTL_V  , CTL_A  ,       TWM_TER, CTL_BS , KC_TAB , CTL_L  , CTL_T ,
+      CTL_S  , CTL_R  , CTL_C  , CTL_V  , CTL_A  ,       CTL_VES, CTL_BS , KC_TAB , CTL_L  , CTL_T ,
       KC_TRNS, KC_TRNS, KC_LSFT, MO(_NUM)),
 
    [_SYM] = LAYOUT_split_3x5_2(
@@ -180,6 +181,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     case CTL_W: // CTRL + W
         if (record->event.pressed) {
             SEND_STRING(SS_LCTL(SS_TAP(X_W)));
+        }
+        break;
+
+    case CTL_VES: // CTRL + V then ESC
+        if (record->event.pressed) {
+            tap_code16(C(KC_V));
+            tap_code16(KC_ESC);
         }
         break;
 
