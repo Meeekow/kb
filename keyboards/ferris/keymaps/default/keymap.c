@@ -188,6 +188,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         if (record->event.pressed) {
             tap_code16(C(KC_V));
             tap_code16(KC_ESC);
+            tap_code16(KC_S);
+            tap_code16(C(S(KC_TAB)));
+            tap_code16(KC_SPACE);
+            tap_code16(C(KC_TAB));
         }
         break;
 
