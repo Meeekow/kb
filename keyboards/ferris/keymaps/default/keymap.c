@@ -132,55 +132,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case CTL_BS: // CTRL + BACKSPACE
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_BSPC)));
+            tap_code16(C(KC_BSPC));
         }
         break;
 
     case CTL_A: // CTRL + A
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_A)));
+            tap_code16(C(KC_A));
         }
         break;
 
     case CTL_C: // CTRL + C
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_C)));
+            tap_code16(C(KC_C));
         }
         break;
 
     case CTL_L: // CTRL + L
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_L)));
+            tap_code16(C(KC_L));
         }
         break;
 
     case CTL_R: // CTRL + R
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_R)));
+            tap_code16(C(KC_R));
         }
         break;
 
     case CTL_S: // CTRL + S
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_S)));
+            tap_code16(C(KC_S));
         }
         break;
 
     case CTL_T: // CTRL + T
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_T)));
+            tap_code16(C(KC_T));
         }
         break;
 
     case CTL_V: // CTRL + V
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_V)));
+            tap_code16(C(KC_V));
         }
         break;
 
     case CTL_W: // CTRL + W
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_W)));
+            tap_code16(C(KC_W));
         }
         break;
 
@@ -197,13 +197,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case TAB_BCK: // CTRL + SHIFT + TAB
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_TAB))));
+            tap_code16(C(S(KC_TAB)));
         }
         break;
 
     case TAB_FWD: // CTRL + TAB
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_TAB)));
+            tap_code16(C(KC_TAB));
         }
         break;
 
