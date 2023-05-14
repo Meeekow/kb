@@ -59,8 +59,6 @@ enum layers {
 
 enum combos {
     COMBO_ESC ,
-    COMBO_LCTL,
-    COMBO_RCTL,
     COMBO_LENGTH
 };
 
@@ -69,14 +67,10 @@ uint16_t COMBO_LEN = COMBO_LENGTH;
 
 
 const uint16_t PROGMEM ESC_COMBO[]  = {KC_M, KC_C, COMBO_END};
-const uint16_t PROGMEM LCTL_COMBO[] = {KC_T, KC_S, COMBO_END};
-const uint16_t PROGMEM RCTL_COMBO[] = {KC_H, KC_A, COMBO_END};
 
 
 combo_t key_combos[] = {
     [COMBO_ESC]  = COMBO(ESC_COMBO , KC_ESC),
-    [COMBO_LCTL] = COMBO(LCTL_COMBO, OSM(MOD_LCTL)),
-    [COMBO_RCTL] = COMBO(RCTL_COMBO, OSM(MOD_LCTL)),
 };
 
 
