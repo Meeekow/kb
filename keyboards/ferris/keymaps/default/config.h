@@ -67,3 +67,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // flow_layers_config
 #define FLOW_LAYERS_COUNT 3
 
+// How quickly all combo keys must be pressed in succession to trigger
+#define COMBO_TERM 25
+

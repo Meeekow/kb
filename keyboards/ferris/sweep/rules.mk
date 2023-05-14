@@ -20,8 +20,12 @@ AUDIO_ENABLE = no           # Audio output
 SPLIT_KEYBOARD = yes        # Use shared split_common code
 LAYOUTS = split_3x5_2
 
+# Enable COMBO
+COMBO_ENABLE = yes
 # Enable CAPS WORD
 CAPS_WORD_ENABLE = yes
 # DalliusD Mod
 SRC += flow.c
+# Repeat Key
+SRC += repeat_key.c
 
