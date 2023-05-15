@@ -59,6 +59,7 @@ enum layers {
 
 enum combos {
     COMBO_ESC ,
+    COMBO_BSPC,
     COMBO_LENGTH
 };
 
@@ -67,10 +68,12 @@ uint16_t COMBO_LEN = COMBO_LENGTH;
 
 
 const uint16_t PROGMEM ESC_COMBO[]  = {KC_M, KC_C, COMBO_END};
+const uint16_t PROGMEM BSPC_COMBO[] = {KC_P, KC_DOT, COMBO_END};
 
 
 combo_t key_combos[] = {
     [COMBO_ESC]  = COMBO(ESC_COMBO , KC_ESC),
+    [COMBO_BSPC] = COMBO(BSPC_COMBO, KC_BSPC),
 };
 
 
