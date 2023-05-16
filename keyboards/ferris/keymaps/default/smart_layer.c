@@ -1,5 +1,5 @@
 #include "smart_layer.h"
-#include "keymap.c"
+#include "keycodes.h"
 
 /* -------- Number Mode -------- */
 static bool _num_mode_active = false;
@@ -19,6 +19,7 @@ void num_mode_process(uint16_t keycode, keyrecord_t *record) {
     // Assess if we should exit layermode or continue processing normally.
     switch (keycode) {
         case KC_1 ... KC_0:
+        case KC_BSPC:
             // process the code and stay in the mode *dabs*
             break;
         default:

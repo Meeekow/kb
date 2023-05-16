@@ -28,4 +28,6 @@ CAPS_WORD_ENABLE = yes
 SRC += flow.c
 # Repeat Key
 SRC += repeat_key.c
+# Smart Layer
+SRC += smart_layer.c
 
