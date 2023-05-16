@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "flow.h"
 #include "repeat_key.h"
+#include "smart_layer.h"
 
 
 enum keycodes {
@@ -44,6 +45,7 @@ enum keycodes {
    TWM_C   ,
    TWM_SSQ ,
    TWM_SCSQ,
+   SL_NUM  ,
 };
 
 
@@ -88,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
       CTL_A  , CTL_R  , CTL_C  , CTL_V  , CTL_VES,       CTL_BS , KC_BSPC, KC_TAB , CTL_L  , CTL_T ,
-      KC_TRNS, KC_TRNS, REPEAT , MO(_NUM)),
+      KC_TRNS, KC_TRNS, REPEAT , SL_NUM),
 
    [_SYM] = LAYOUT_split_3x5_2(
       KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
@@ -100,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_NO  , KC_3  , KC_4   , KC_7, KC_NO,             KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
       KC_9   , KC_0  , KC_1   , KC_2, KC_NO,             KC_NO, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       KC_NO  , KC_5  , KC_6   , KC_8, KC_NO,             KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
-      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS),
+      KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS),
 
    [_TWM] = LAYOUT_split_3x5_2(
       TWM_S1 , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,       TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
@@ -139,10 +141,14 @@ const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
+   // DALLIUSD implementation of Callum Mods
    if (!update_flow(keycode, record->event.pressed, record->event.key)) return false;
 
+   // REPEAT KEY
    if (!process_repeat_key(keycode, record, REPEAT)) return false;
 
+   // SMART LAYER
+   process_layermodes(keycode, record);
 
    switch (keycode) {
     /*
@@ -155,6 +161,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
     */
+
+    case SL_NUM: // SMART LAYER + _NUM LAYER
+        num_mode_enable(record);
+        return false;
 
     case CTL_BS: // CTRL + BACKSPACE
         if (record->event.pressed) {
@@ -443,5 +453,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 void matrix_scan_user(void) {
     flow_matrix_scan();
+}
+
+
+/* SMART LAYERS */
+static bool _num_mode_active = false;
+// Turn number mode on. To be called from a custom keycode
+void num_mode_enable(keyrecord_t *record) {
+    _num_mode_active = true;
+    layer_on(_NUM);
+}
+
+// Turn number mode off.
+void num_mode_disable(void) {
+    _num_mode_active = false;
+    layer_off(_NUM);
+}
+
+void num_mode_process(uint16_t keycode, keyrecord_t *record) {
+    // Assess if we should exit layermode or continue processing normally.
+    switch (keycode) {
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+            // process the code and stay in the mode *dabs*
+            break;
+        default:
+            // All other keys disable the layer mode on keyup.
+            if (!record->event.pressed) {
+                num_mode_disable();
+            }
+            break;
+    }
+}
+
+/* -------- Process Record -------- */
+void process_layermodes(uint16_t keycode, keyrecord_t *record) {
+    if (_num_mode_active) {
+        num_mode_process(keycode, record);
+    }
 }
 
