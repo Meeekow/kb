@@ -3,10 +3,21 @@
 
 /* -------- Number Mode -------- */
 static bool _num_mode_active = false;
+static uint16_t num_mode_timer;
 // Turn number mode on. To be called from a custom keycode
 void num_mode_enable(keyrecord_t *record) {
-    _num_mode_active = true;
-    layer_on(_NUM);
+    if (record->event.pressed) {
+        layer_on(_NUM);
+        num_mode_timer = timer_read();
+    } else {
+        if (timer_elapsed(num_mode_timer) < TAPPING_TERM) {
+            // Tapping enables layer mode
+            _num_mode_active = true;
+        } else {
+            // Holding treats as a normal LT
+            layer_off(_NUM);
+        }
+    }
 }
 
 // Turn number mode off.
