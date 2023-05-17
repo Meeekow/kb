@@ -43,7 +43,8 @@ enum keycodes {
    TWM_C   ,
    TWM_SSQ ,
    TWM_SCSQ,
-   SL_NUM  ,
+   SL_NUMO ,
+   SL_NUMX ,
 };
 
 

@@ -6,8 +6,10 @@
 
 
 enum combos {
-    COMBO_ESC ,
-    COMBO_BSPC,
+    COMBO_ESC,
+    COMBO_TAB,
+    COMBO_NUM,
+    COMBO_CAP,
     COMBO_LENGTH
 };
 
@@ -15,13 +17,17 @@ enum combos {
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 
-const uint16_t PROGMEM ESC_COMBO[]  = {KC_M, KC_C, COMBO_END};
-const uint16_t PROGMEM BSPC_COMBO[] = {KC_P, KC_DOT, COMBO_END};
+const uint16_t PROGMEM ESC_COMBO[] = {KC_M, KC_C  , COMBO_END};
+const uint16_t PROGMEM TAB_COMBO[] = {KC_P, KC_DOT, COMBO_END};
+const uint16_t PROGMEM NUM_COMBO[] = {KC_D, KC_W  , COMBO_END};
+const uint16_t PROGMEM CAP_COMBO[] = {KC_F, KC_O  , COMBO_END};
 
 
 combo_t key_combos[] = {
-    [COMBO_ESC]  = COMBO(ESC_COMBO , KC_ESC),
-    [COMBO_BSPC] = COMBO(BSPC_COMBO, KC_BSPC),
+    [COMBO_ESC] = COMBO(ESC_COMBO, KC_ESC),
+    [COMBO_TAB] = COMBO(TAB_COMBO, KC_TAB),
+    [COMBO_NUM] = COMBO(NUM_COMBO, SL_NUMO),
+    [COMBO_CAP] = COMBO(CAP_COMBO, CW_TOGG),
 };
 
 
@@ -34,21 +40,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_NAV] = LAYOUT_split_3x5_2(
       KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, TWM_TER,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
       CTL_A  , CTL_R  , CTL_C  , CTL_V  , CTL_VES,       CTL_BS , KC_BSPC, KC_TAB , CTL_L  , CTL_T ,
-      KC_TRNS, KC_TRNS, REPEAT , SL_NUM),
+      KC_TRNS, KC_TRNS, REPEAT , MO(_NUM)),
 
    [_SYM] = LAYOUT_split_3x5_2(
       KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
       CDDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, UPDIR  ,
-      MO(_TWM), KC_TRNS, KC_TRNS, KC_TRNS),
+      MO(_TWM), KC_TRNS, KC_NO , KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
-      KC_NO  , KC_3  , KC_4   , KC_7, KC_NO,             KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
-      KC_9   , KC_0  , KC_1   , KC_2, KC_NO,             KC_NO, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      KC_NO  , KC_5  , KC_6   , KC_8, KC_NO,             KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
-      KC_TRNS, KC_TRNS, KC_BSPC, KC_TRNS),
+      KC_6   , KC_4   , KC_0   , KC_2   , KC_8  ,        KC_9  , KC_3   , KC_1   , KC_5   , KC_7   ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
+      KC_F6  , KC_F4  , KC_F10 , KC_F2  , KC_F8 ,        KC_F9 , KC_F3  , KC_F1  , KC_F5  , KC_F7  ,
+      SL_NUMX, KC_TRNS, KC_BSPC, KC_TRNS),
 
    [_TWM] = LAYOUT_split_3x5_2(
       TWM_S1 , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,       TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
@@ -108,8 +114,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         break;
     */
 
-    case SL_NUM: // SMART LAYER + _NUM LAYER
+    case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
         num_mode_enable(record);
+        return false;
+
+    case SL_NUMX: // TURN OFF SMART LAYER FOR _NUM LAYER
+        num_mode_disable();
         return false;
 
     case CTL_BS: // CTRL + BACKSPACE
