@@ -6,15 +6,18 @@
 
 
 enum combos {
+    COMBO_PANIC,
     COMBO_ESC,
     COMBO_LENGTH
 };
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM ESC_COMBO[] = {KC_M, KC_C  , COMBO_END};
+const uint16_t PROGMEM PANIC_COMBO[] = {KC_P, KC_DOT, COMBO_END};
+const uint16_t PROGMEM ESC_COMBO[]   = {KC_M, KC_C  , COMBO_END};
 
 combo_t key_combos[] = {
+    [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC),
     [COMBO_ESC] = COMBO(ESC_COMBO, KC_ESC),
 };
 
@@ -36,7 +39,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
       CDDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, UPDIR  ,
-      SL_TWMO, KC_TRNS, KC_NO , KC_TRNS),
+      SL_TWMO, REPEAT , KC_NO , KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
       KC_NO  , KC_3, KC_4, KC_7, KC_NO,                  KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
@@ -102,6 +105,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         break;
     */
 
+    case PANIC: // CLEAR EVERYTHING
+        clear_oneshot_mods();
+        clear_mods();
+        if (get_oneshot_layer() != 0) {
+            clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
+        }
+        layer_move(0);
+        caps_word_off();
+        return false;
+
     case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
         num_mode_enable(record);
         return false;
@@ -110,11 +123,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         num_mode_disable();
         return false;
 
-    case SL_TWMO:
+    case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER
         twm_mode_enable(record);
         return false;
 
-    case SL_TWMX:
+    case SL_TWMX: // TURN OFF SMART LAYER FOR _TWM LAYER
         twm_mode_disable();
         return false;
 
@@ -172,7 +185,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
-    case CTL_VES: // CTRL + V then ESC
+    case CTL_VES: // CTRL + V -> ESC -> S -> CTRL + SHIFT + TAB -> SPACE -> CTRL + TAB
         if (record->event.pressed) {
             tap_code16(C(KC_V));
             tap_code16(KC_ESC);
@@ -364,7 +377,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
-    case TWM_SSQ:
+    case TWM_SSQ: // HARD RESTART
         if (record->event.pressed) {
           register_code(KC_LGUI);
           register_code(KC_LSFT);
@@ -375,7 +388,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
-    case TWM_SCSQ:
+    case TWM_SCSQ: // PATCH RESTART
         if (record->event.pressed) {
           register_code(KC_LGUI);
           register_code(KC_LCTL);

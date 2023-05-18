@@ -47,6 +47,7 @@ enum keycodes {
    SL_NUMX ,
    SL_TWMO ,
    SL_TWMX ,
+   PANIC   ,
 };
 
 
