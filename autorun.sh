@@ -22,6 +22,12 @@ cd ~/qmk_firmware/keyboards/ferris/sweep
 rm -rf rules.mk
 ln -s ~/kb/keyboards/ferris/sweep/rules.mk .
 
-# Go to qmk directory and run pip install for qmk
-cd $HOME/qmk_firmware/ && sudo python3 -m pip install --user qmk
+# Go to qmk directory
+cd $HOME/qmk_firmware/
+
+# Run pip install for qmk
+python3 -m pip install --user qmk
+
+# Hotfix for qmk not found error
+# echo 'PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc && source $HOME/.bashrc
 
