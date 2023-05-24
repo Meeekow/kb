@@ -29,5 +29,5 @@ cd $HOME/qmk_firmware/
 python3 -m pip install --user qmk
 
 # Hotfix for qmk not found error
-# echo 'PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc && source $HOME/.bashrc
+echo 'PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc && source $HOME/.bashrc
 
