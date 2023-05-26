@@ -30,10 +30,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_NAV, KC_SPC, OSM(MOD_LSFT), OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
-      KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
+      KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, KC_F11 ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
       CTL_A  , CTL_R  , CTL_C  , CTL_V  , CTL_VES,       CTL_BS , KC_BSPC, KC_TAB , CTL_L  , CTL_T ,
-      KC_TRNS, KC_NO  , REPEAT , SL_NUMO),
+      KC_TRNS, OS_EXT , REPEAT , SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
       KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
