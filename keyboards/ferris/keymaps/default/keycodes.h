@@ -3,7 +3,13 @@
 
 
 enum keycodes {
-   CTL_BS = SAFE_RANGE,
+   REPEAT = SAFE_RANGE,
+   OS_NAV  ,
+   OS_SYM  ,
+   OS_TWM  ,
+   OS_NUM  ,
+   OS_EXT  ,
+   CTL_BS  ,
    CTL_A   ,
    CTL_C   ,
    CTL_L   ,
@@ -15,15 +21,8 @@ enum keycodes {
    CTL_VES ,
    TAB_BCK ,
    TAB_FWD ,
-   UPDIR   ,
    CDDIR   ,
-   REPEAT  ,
-   OS_NAV  ,
-   OS_SYM  ,
-   OS_NUM  ,
-   OS_TWM  ,
-   OS_EXT  ,
-   OS_SFT  ,
+   UPDIR   ,
    TWM_S1  ,
    TWM_S2  ,
    TWM_S3  ,
@@ -60,3 +59,5 @@ enum layers {
     _EXT,
 };
 
+
+#define _SHIFT OSM(MOD_LSFT)

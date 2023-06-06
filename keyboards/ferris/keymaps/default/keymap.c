@@ -13,12 +13,12 @@ enum combos {
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM PANIC_COMBO[] = {KC_P, KC_DOT, COMBO_END};
-const uint16_t PROGMEM ESC_COMBO[]   = {KC_M, KC_C  , COMBO_END};
+const uint16_t PROGMEM PANIC_COMBO[] = {KC_SPC, _SHIFT, COMBO_END};
+const uint16_t PROGMEM ESC_COMBO[]   = {KC_M  , KC_C  , COMBO_END};
 
 combo_t key_combos[] = {
-    [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC),
-    [COMBO_ESC] = COMBO(ESC_COMBO, KC_ESC),
+    [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC ),
+    [COMBO_ESC]   = COMBO(ESC_COMBO  , KC_ESC),
 };
 
 
@@ -27,12 +27,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_NAV, KC_SPC, OSM(MOD_LSFT), OS_SYM),
+      OS_NAV, KC_SPC, _SHIFT, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
       KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, KC_F11 ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
-      CTL_A  , CTL_R  , CTL_C  , CTL_V  , CTL_VES,       CTL_BS , KC_BSPC, KC_TAB , CTL_L  , CTL_T ,
+      CTL_A  , CTL_R  , CTL_C  , CTL_V  , CTL_VES,       CTL_L  , CTL_BS , KC_BSPC, KC_TAB , CTL_T ,
       KC_TRNS, OS_EXT , REPEAT , SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
@@ -41,17 +41,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       CDDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, UPDIR  ,
       SL_TWMO, REPEAT , KC_NO , KC_TRNS),
 
-   [_NUM] = LAYOUT_split_3x5_2(
-      KC_ESC , KC_3, KC_4, KC_7, KC_NO,                  KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_LGUI,
-      KC_9   , KC_0, KC_1, KC_2, KC_NO,                  KC_NO, KC_LCTL, KC_LSFT, KC_LALT, KC_ENT ,
-      KC_NO  , KC_5, KC_6, KC_8, KC_NO,                  KC_NO, KC_BSPC, KC_NO  , KC_NO  , KC_NO  ,
-      SL_NUMX, KC_TRNS, KC_NO, KC_TRNS),
-
    [_TWM] = LAYOUT_split_3x5_2(
       TWM_S1 , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,       TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
       KC_NO  , TWM_TER, TWM_RET, TWM_RUN, KC_NO  ,       TWM_H  , TWM_J  , TWM_K  , TWM_L  , TWM_C   ,
       KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , TWM_SSQ ,
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
+
+   [_NUM] = LAYOUT_split_3x5_2(
+      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO,         KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
+      KC_7   , KC_5   , KC_3   , KC_1   , KC_9 ,         KC_8 , KC_0   , KC_2   , KC_4   , KC_6   ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_NO,         KC_NO, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
+      SL_NUMX, KC_TRNS, KC_NO, KC_TRNS),
 
    [_EXT] = LAYOUT_split_3x5_2(
       QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
@@ -94,8 +94,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    process_layermodes(keycode, record);
 
    switch (keycode) {
+
     /*
-    case LT(_SYM, OS_SFT): // SHIFT on tap; Access SYM layer on hold
+    case LT(_UTL, OS_SFT): // SHIFT on tap; Access SYM layer on hold
         if (record->tap.count > 0) {
             if (record->event.pressed) {
                 set_oneshot_mods(MOD_LSFT);
@@ -104,32 +105,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
     */
-
-    case PANIC: // CLEAR EVERYTHING
-        clear_oneshot_mods();
-        clear_mods();
-        if (get_oneshot_layer() != 0) {
-            clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
-        }
-        layer_move(0);
-        caps_word_off();
-        return false;
-
-    case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
-        num_mode_enable(record);
-        return false;
-
-    case SL_NUMX: // TURN OFF SMART LAYER FOR _NUM LAYER
-        num_mode_disable();
-        return false;
-
-    case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER
-        twm_mode_enable(record);
-        return false;
-
-    case SL_TWMX: // TURN OFF SMART LAYER FOR _TWM LAYER
-        twm_mode_disable();
-        return false;
 
     case CTL_BS: // CTRL + BACKSPACE
         if (record->event.pressed) {
@@ -400,6 +375,32 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
           unregister_code(KC_LGUI);
         }
         break;
+
+    case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
+        num_mode_enable(record);
+        return false;
+
+    case SL_NUMX: // TURN OFF SMART LAYER FOR _NUM LAYER
+        num_mode_disable();
+        return false;
+
+    case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER
+        twm_mode_enable(record);
+        return false;
+
+    case SL_TWMX: // TURN OFF SMART LAYER FOR _TWM LAYER
+        twm_mode_disable();
+        return false;
+
+    case PANIC: // CLEAR EVERYTHING
+        clear_oneshot_mods();
+        clear_mods();
+        if (get_oneshot_layer() != 0) {
+            clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
+        }
+        layer_move(0);
+        caps_word_off();
+        return false;
 
    /*
     case VI_I: // TURN OFF VIM LAYER + HIT LETTER "I"
