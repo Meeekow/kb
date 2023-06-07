@@ -7,18 +7,15 @@
 
 enum combos {
     COMBO_PANIC,
-    COMBO_ESC,
     COMBO_LENGTH
 };
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM PANIC_COMBO[] = {KC_SPC, _SHIFT, COMBO_END};
-const uint16_t PROGMEM ESC_COMBO[]   = {KC_M  , KC_C  , COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC ),
-    [COMBO_ESC]   = COMBO(ESC_COMBO  , KC_ESC),
 };
 
 
@@ -30,9 +27,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_NAV, KC_SPC, _SHIFT, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
-      KC_ESC , CTL_W  , TAB_BCK, TAB_FWD, KC_F11 ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
-      CTL_A  , CTL_R  , CTL_C  , CTL_V  , CTL_VES,       CTL_L  , CTL_BS , KC_BSPC, KC_TAB , CTL_T ,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, KC_F11 ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
+      KC_LGUI, KC_LALT, KC_LCTL, KC_ESC , CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
+      KC_LSFT, CTL_A  , CTL_C  , CTL_V  , CTL_VES,       CTL_L  , CTL_BS , KC_BSPC, KC_TAB , CTL_T ,
       KC_TRNS, OS_EXT , REPEAT , SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
