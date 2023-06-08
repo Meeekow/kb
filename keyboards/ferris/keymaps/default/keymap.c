@@ -26,6 +26,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
       OS_NAV, KC_SPC, _SHIFT, OS_SYM),
 
+   [_WRK] = LAYOUT_split_3x5_2(
+      KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
+      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
+      KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
+      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
+
+   [_AKL] = LAYOUT_split_3x5_2(
+      KC_COMM, KC_U   , KC_O  , KC_F, KC_Z,              KC_Q, KC_M, KC_W, KC_L, KC_Y   ,
+      KC_I   , KC_E   , KC_A  , KC_N, KC_B,              KC_G, KC_T, KC_S, KC_R, KC_C   ,
+      KC_J   , KC_SLSH, KC_DOT, KC_H, KC_P,              KC_K, KC_D, KC_V, KC_X, KC_QUOT,
+      OS_NAV, KC_SPC, _SHIFT, OS_SYM),
+
    [_NAV] = LAYOUT_split_3x5_2(
       CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, KC_F11 ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
       KC_LGUI, KC_LALT, KC_LCTL, KC_ESC , CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
@@ -36,13 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
       CDDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, UPDIR  ,
-      SL_TWMO, REPEAT , KC_NO , KC_TRNS),
-
-   [_TWM] = LAYOUT_split_3x5_2(
-      TWM_S1 , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,       TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
-      KC_NO  , TWM_TER, TWM_RET, TWM_RUN, KC_NO  ,       TWM_H  , TWM_J  , TWM_K  , TWM_L  , TWM_C   ,
-      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , TWM_SSQ ,
-      KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
+      SL_TWMO, REPEAT , OS_WRK , KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
       KC_1   , KC_2   , KC_3   , KC_4   , KC_5 ,         KC_6 , KC_7   , KC_8   , KC_9   , KC_0   ,
@@ -50,8 +56,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_NO,         KC_NO, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       SL_NUMX, KC_TRNS, KC_BSPC, KC_TRNS),
 
+   [_TWM] = LAYOUT_split_3x5_2(
+      TWM_S1 , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,       TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
+      KC_NO  , TWM_TER, TWM_RET, TWM_RUN, KC_NO  ,       TWM_H  , TWM_J  , TWM_K  , TWM_L  , TWM_C   ,
+      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , TWM_SSQ ,
+      KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
+
    [_EXT] = LAYOUT_split_3x5_2(
-      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
+      QK_BOOT, KC_NO  , OS_AKL , KC_NO  , KC_NO  ,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
       KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,       KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11 ,       KC_F12 , KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       KC_TRNS, KC_TRNS, KC_NO, KC_NO),
@@ -103,6 +115,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         break;
     */
 
+    case OS_WRK: // Sets default layer to _WRK
+        if (record->event.pressed) {
+            default_layer_set(0x00000002);
+        }
+        break;
+
+    case OS_AKL: // Sets default layer to _AKL
+        if (record->event.pressed) {
+            default_layer_set(0x00000004);
+        }
+        break;
+
     case CTL_BS: // CTRL + BACKSPACE
         if (record->event.pressed) {
             tap_code16(C(KC_BSPC));
@@ -130,12 +154,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     case CTL_R: // CTRL + R
         if (record->event.pressed) {
             tap_code16(C(KC_R));
-        }
-        break;
-
-    case CTL_S: // CTRL + S
-        if (record->event.pressed) {
-            tap_code16(C(KC_S));
         }
         break;
 
@@ -395,6 +413,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         if (get_oneshot_layer() != 0) {
             clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
         }
+        default_layer_set(0x00000001);
         layer_move(0);
         caps_word_off();
         return false;

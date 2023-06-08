@@ -4,17 +4,16 @@
 
 enum keycodes {
    REPEAT = SAFE_RANGE,
+   OS_WRK  ,
+   OS_AKL  ,
    OS_NAV  ,
    OS_SYM  ,
-   OS_TWM  ,
-   OS_NUM  ,
    OS_EXT  ,
    CTL_BS  ,
    CTL_A   ,
    CTL_C   ,
    CTL_L   ,
    CTL_R   ,
-   CTL_S   ,
    CTL_T   ,
    CTL_V   ,
    CTL_W   ,
@@ -52,10 +51,12 @@ enum keycodes {
 
 enum layers {
     _ABC,
+    _WRK,
+    _AKL,
     _NAV,
     _SYM,
-    _TWM,
     _NUM,
+    _TWM,
     _EXT,
 };
 
