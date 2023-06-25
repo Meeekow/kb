@@ -1,5 +1,5 @@
 #include QMK_KEYBOARD_H
-#include "keycodes.h"
+#include "custom_keycodes.h"
 #include "flow.h"
 #include "repeat_key.h"
 #include "smart_layer.h"
@@ -12,7 +12,7 @@ enum combos {
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM PANIC_COMBO[] = {KC_SPC, _SHIFT, COMBO_END};
+const uint16_t PROGMEM PANIC_COMBO[] = {KC_M, KC_C, COMBO_END};
 
 combo_t key_combos[] = {
     [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC ),
@@ -24,7 +24,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_NAV, KC_SPC, _SHIFT, OS_SYM),
+      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
 
    [_WRK] = LAYOUT_split_3x5_2(
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
@@ -36,12 +36,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_COMM, KC_U   , KC_O  , KC_F, KC_Z,              KC_Q, KC_M, KC_W, KC_L, KC_Y   ,
       KC_I   , KC_E   , KC_A  , KC_N, KC_B,              KC_G, KC_T, KC_S, KC_R, KC_C   ,
       KC_J   , KC_SLSH, KC_DOT, KC_H, KC_P,              KC_K, KC_D, KC_V, KC_X, KC_QUOT,
-      OS_NAV, KC_SPC, _SHIFT, OS_SYM),
+      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, KC_F11 ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
-      KC_LGUI, KC_LALT, KC_LCTL, KC_ESC , CW_TOGG,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
-      KC_LSFT, CTL_A  , CTL_C  , CTL_V  , CTL_VES,       CTL_L  , CTL_BS , KC_BSPC, KC_TAB , CTL_T ,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, KC_F11,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_ESC,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
+      CTL_T  , CTL_A  , CTL_C  , CTL_V  , PANIC ,        CTL_L  , CTL_BS , KC_BSPC, KC_TAB , CW_TOGG,
       KC_TRNS, OS_EXT , REPEAT , SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
@@ -63,9 +63,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
 
    [_EXT] = LAYOUT_split_3x5_2(
-      QK_BOOT, KC_NO  , OS_AKL , KC_NO  , PANIC  ,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
-      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,       KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11 ,       KC_F12 , KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
+      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , OS_AKL,        KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
+      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12 , KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       KC_TRNS, KC_TRNS, KC_NO, KC_NO),
 };
 
@@ -175,7 +175,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
-    case CTL_VES: // CTRL + V -> ESC -> S -> CTRL + SHIFT + TAB -> SPACE -> CTRL + TAB
+    case CTL_VES: // CTRL + V -> ESC -> S
         if (record->event.pressed) {
             tap_code16(C(KC_V));
             tap_code16(KC_ESC);

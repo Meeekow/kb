@@ -1,5 +1,5 @@
 #include "smart_layer.h"
-#include "keycodes.h"
+#include "custom_keycodes.h"
 
 /* -------- Number Mode -------- */
 static bool _num_mode_active = false;

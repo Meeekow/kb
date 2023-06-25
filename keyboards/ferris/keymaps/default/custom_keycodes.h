@@ -60,5 +60,3 @@ enum layers {
     _EXT,
 };
 
-
-#define _SHIFT OSM(MOD_LSFT)

@@ -1,5 +1,5 @@
 # MCU name
-MCU = atmega32u4
+MCU = RP2040
 
 # Bootloader selection
 BOOTLOADER = rp2040
