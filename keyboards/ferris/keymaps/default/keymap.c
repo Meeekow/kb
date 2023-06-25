@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
+      OS_NAV, KC_SPC, KC_ESC, CTL_VES),
 
    [_AKL] = LAYOUT_split_3x5_2(
       KC_COMM, KC_U   , KC_O  , KC_F, KC_Z,              KC_Q, KC_M, KC_W, KC_L, KC_Y   ,
@@ -63,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
 
    [_EXT] = LAYOUT_split_3x5_2(
-      QK_BOOT, KC_NO  , OS_AKL , KC_NO  , KC_NO  ,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
+      QK_BOOT, KC_NO  , OS_AKL , KC_NO  , PANIC  ,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
       KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,       KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11 ,       KC_F12 , KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       KC_TRNS, KC_TRNS, KC_NO, KC_NO),
@@ -180,9 +180,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             tap_code16(C(KC_V));
             tap_code16(KC_ESC);
             tap_code16(KC_S);
-            tap_code16(C(S(KC_TAB)));
-            tap_code16(KC_SPACE);
-            tap_code16(C(KC_TAB));
         }
         break;
 
