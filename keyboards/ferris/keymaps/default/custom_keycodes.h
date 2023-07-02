@@ -60,3 +60,6 @@ enum layers {
     _EXT,
 };
 
+
+#define OS_SFT OSM(MOD_LSFT)
+
