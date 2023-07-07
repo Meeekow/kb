@@ -17,7 +17,7 @@ enum keycodes {
    CTL_T   ,
    CTL_V   ,
    CTL_W   ,
-   CTL_VES ,
+   CTL_VEQ ,
    TAB_BCK ,
    TAB_FWD ,
    CDDIR   ,
