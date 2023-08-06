@@ -12,43 +12,31 @@ enum combos {
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM PANIC_COMBO[] = {KC_M, KC_C, COMBO_END};
+const uint16_t PROGMEM PANIC_COMBO[] = {KC_C, KC_P, COMBO_END};
 
 combo_t key_combos[] = {
-    [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC ),
+    [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC),
 };
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_ABC] = LAYOUT_split_3x5_2(
-      KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
-      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
-      KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_NAV, KC_SPC, OS_SFT, OS_SYM),
-
-   [_WRK] = LAYOUT_split_3x5_2(
-      KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
-      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
-      KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_NAV, KC_SPC, KC_ESC, CTL_VEQ),
-
-   [_AKL] = LAYOUT_split_3x5_2(
-      KC_COMM, KC_U   , KC_O  , KC_F, KC_Z,              KC_Q, KC_M, KC_W, KC_L, KC_Y   ,
-      KC_I   , KC_E   , KC_A  , KC_N, KC_B,              KC_G, KC_T, KC_S, KC_R, KC_C   ,
-      KC_J   , KC_SLSH, KC_DOT, KC_H, KC_P,              KC_K, KC_D, KC_V, KC_X, KC_QUOT,
+      KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O   , KC_U   , KC_DOT ,
+      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A   , KC_E   , KC_I   ,
+      KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_QUOT, KC_SCLN, KC_COMM,
       OS_NAV, KC_SPC, OS_SFT, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, KC_F11 ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
       KC_LGUI, KC_LALT, KC_ESC , KC_LCTL, KC_LSFT,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_T  , CTL_A  , CTL_C  , CTL_V  , PANIC  ,       CTL_L  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
-      KC_TRNS, OS_EXT , REPEAT , SL_NUMO),
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S  ,       CTL_L  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_GRV , KC_LABK, KC_RABK, KC_DQUO, KC_PIPE,       KC_BSLS, KC_AT  , KC_LBRC, KC_RBRC, KC_TILD,
+      KC_DQUO, KC_LABK, KC_RABK, KC_CIRC, KC_PIPE,       KC_BSLS, KC_DLR , KC_LCBR, KC_RCBR, KC_AT  ,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
-      CDDIR  , KC_PERC, KC_ASTR, KC_UNDS, KC_CIRC,       KC_DLR , KC_SCLN, KC_LCBR, KC_RCBR, UPDIR  ,
-      SL_TWMO, REPEAT , OS_WRK , KC_TRNS),
+      CDDIR  , KC_PERC, KC_ASTR, KC_SLSH, KC_TILD,       KC_UNDS, KC_GRV , KC_LBRC, KC_RBRC, UPDIR  ,
+      SL_TWMO, REPEAT , PANIC  , KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
       KC_1   , KC_2   , KC_3   , KC_4   , KC_5 ,         KC_6 , KC_7   , KC_8   , KC_9   , KC_0   ,
@@ -63,9 +51,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
 
    [_EXT] = LAYOUT_split_3x5_2(
-      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , OS_AKL,        KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
-      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12 , KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
+      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_TRNS,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
+      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,       KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11 ,       KC_F12 , KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       KC_TRNS, KC_TRNS, KC_NO, KC_NO),
 };
 
@@ -103,9 +91,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    process_layermodes(keycode, record);
 
    switch (keycode) {
-
     /*
-    case LT(_UTL, OS_SFT): // SHIFT on tap; Access SYM layer on hold
+    case LT(_NUM, KC_F15): // SHIFT on tap; Access NUM layer on hold
         if (record->tap.count > 0) {
             if (record->event.pressed) {
                 set_oneshot_mods(MOD_LSFT);
@@ -113,19 +100,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             return false;
         }
         break;
+
+    case OS_WRK: // Sets default layer to _WRK;
+        if (record->event.pressed) {
+            default_layer_set(0x00000002); // Increment by 2 any succeeding alt layer
+        }
+        break;
     */
-
-    case OS_WRK: // Sets default layer to _WRK
-        if (record->event.pressed) {
-            default_layer_set(0x00000002);
-        }
-        break;
-
-    case OS_AKL: // Sets default layer to _AKL
-        if (record->event.pressed) {
-            default_layer_set(0x00000004);
-        }
-        break;
 
     case CTL_BS: // CTRL + BACKSPACE
         if (record->event.pressed) {
@@ -157,9 +138,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
-    case CTL_T: // CTRL + T
+    case CTL_S: // CTRL + S
         if (record->event.pressed) {
-            tap_code16(C(KC_T));
+            tap_code16(C(KC_S));
         }
         break;
 
@@ -175,11 +156,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
-    case CTL_VEQ: // CTRL + V -> ESC -> Q
+    case CTL_Z: // CTRL + Z
         if (record->event.pressed) {
-            tap_code16(C(KC_V));
-            tap_code16(KC_ESC);
-            tap_code16(KC_Q);
+            tap_code16(C(KC_Z));
         }
         break;
 
@@ -414,17 +393,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         layer_move(0);
         caps_word_off();
         return false;
-
-   /*
-    case VI_I: // TURN OFF VIM LAYER + HIT LETTER "I"
-        if (record->event.pressed) {
-            tap_code(KC_I);
-            layer_off(_VIM);
-        }
-        return false;
-        break;
-   */
-
       }
   return true;
 }
