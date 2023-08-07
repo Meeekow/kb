@@ -24,19 +24,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O   , KC_U   , KC_DOT ,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A   , KC_E   , KC_I   ,
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_QUOT, KC_SCLN, KC_COMM,
-      OS_NAV, KC_SPC, OS_SFT, OS_SYM),
+      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
-      KC_LGUI, KC_LALT, KC_ESC , KC_LCTL, KC_LSFT,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S  ,       CTL_L  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, OS_EXT,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_ESC,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S ,        CTL_L  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
       KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_DQUO, KC_LABK, KC_RABK, KC_CIRC, KC_PIPE,       KC_BSLS, KC_DLR , KC_LCBR, KC_RCBR, KC_AT  ,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LPRN, KC_RPRN, KC_QUES,
-      CDDIR  , KC_PERC, KC_ASTR, KC_SLSH, KC_TILD,       KC_UNDS, KC_GRV , KC_LBRC, KC_RBRC, UPDIR  ,
-      SL_TWMO, REPEAT , PANIC  , KC_TRNS),
+      KC_ASTR, KC_LPRN, KC_RPRN, KC_CIRC, KC_PIPE,       KC_BSLS, KC_DLR , KC_LCBR, KC_RCBR, KC_AT  ,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LSFT, KC_DQUO, KC_QUES,
+      KC_PERC, KC_LABK, KC_RABK, KC_SLSH, KC_TILD,       KC_UNDS, KC_GRV , KC_LBRC, KC_RBRC, UPDIR  ,
+      SL_TWMO, REPEAT, PANIC, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
       KC_1   , KC_2   , KC_3   , KC_4   , KC_5 ,         KC_6 , KC_7   , KC_8   , KC_9   , KC_0   ,
@@ -66,6 +66,7 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
     {OS_NAV, KC_LALT},
     {OS_NAV, KC_LSFT},
     {OS_NAV, KC_LCTL},
+    {OS_SYM, KC_LSFT},
 };
 
 
@@ -171,12 +172,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     case TAB_FWD: // CTRL + TAB
         if (record->event.pressed) {
             tap_code16(C(KC_TAB));
-        }
-        break;
-
-    case CDDIR: // MACRO FOR "~/"
-        if (record->event.pressed) {
-            SEND_STRING("~/");
         }
         break;
 

@@ -18,7 +18,6 @@ enum keycodes {
    CTL_Z   ,
    TAB_BCK ,
    TAB_FWD ,
-   CDDIR   ,
    UPDIR   ,
    TWM_S1  ,
    TWM_S2  ,
