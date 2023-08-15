@@ -10,6 +10,7 @@ enum keycodes {
    CTL_BS  ,
    CTL_A   ,
    CTL_C   ,
+   CTL_I   ,
    CTL_L   ,
    CTL_R   ,
    CTL_S   ,
