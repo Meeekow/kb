@@ -21,21 +21,27 @@ combo_t key_combos[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_ABC] = LAYOUT_split_3x5_2(
-      KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O   , KC_U   , KC_DOT ,
-      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A   , KC_E   , KC_I   ,
-      KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_QUOT, KC_SCLN, KC_COMM,
-      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
+      KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
+      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
+      KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SCLN,
+      OS_NAV, KC_SPC, SL_UTLO, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, KC_ESC,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_I ,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S ,        CTL_L  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_I,         KC_DEL , CTL_BS , KC_BSPC, KC_TAB , KC_INS ,
       KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
+   [_UTL] = LAYOUT_split_3x5_2(
+      KC_7 , KC_5 , KC_3 , KC_1  , KC_9 ,                KC_8 , KC_0  , KC_2 , KC_4 , KC_6 ,
+      TWM_J, BRACE, PAREN, KC_ESC, KC_NO,                KC_NO, KC_TAB, ARROW, QUOTE, TWM_K,
+      KC_NO, KC_NO, KC_NO, KC_NO , KC_NO,                KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
+      KC_LSFT, KC_TRNS, KC_TRNS, KC_LSFT),
+
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_ASTR, KC_LPRN, KC_RPRN, KC_CIRC, KC_PIPE,       KC_BSLS, KC_DLR , KC_LCBR, KC_RCBR, KC_AT  ,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_HASH, KC_COLN, KC_LSFT, KC_DQUO, KC_QUES,
-      KC_PERC, KC_LABK, KC_RABK, KC_SLSH, KC_TILD,       KC_UNDS, KC_GRV , KC_LBRC, KC_RBRC, UPDIR  ,
+      KC_CIRC, KC_LPRN, KC_RPRN, KC_DLR , KC_UNDS,       KC_HASH, KC_PERC, KC_RABK, KC_LABK, KC_AT  ,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, KC_COLN, KC_LSFT, KC_GRV , KC_QUES,
+      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_AMPR, KC_ASTR, KC_DQUO, CDDIR  ,
       SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -51,10 +57,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
 
    [_EXT] = LAYOUT_split_3x5_2(
-      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_TRNS,       KC_PSCR, KC_NO  , KC_NO  , KC_NO  , KC_INS ,
-      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5  ,       KC_F6  , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11 ,       KC_F12 , KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      KC_TRNS, KC_TRNS, KC_NO, KC_NO),
+      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_NO  , KC_PSCR,
+      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6 , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
+      KC_NO, KC_NO, KC_TRNS, KC_NO),
 };
 
 
@@ -90,6 +96,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
    // SMART LAYER
    process_layermodes(keycode, record);
+
+   // PAIRS MACRO
+   const uint8_t mods = get_mods();
+   const uint8_t oneshot_mods = get_oneshot_mods();
 
    switch (keycode) {
     /*
@@ -178,12 +188,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     case TAB_FWD: // CTRL + TAB
         if (record->event.pressed) {
             tap_code16(C(KC_TAB));
-        }
-        break;
-
-    case UPDIR: // MACRO FOR "../"
-        if (record->event.pressed) {
-            SEND_STRING("../");
         }
         break;
 
@@ -368,12 +372,86 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
+    case BRACE:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                SEND_STRING("{}");
+                tap_code(KC_LEFT);
+                tap_code(KC_ENT);
+            } else {
+                SEND_STRING("{}");
+                tap_code(KC_LEFT);
+            }
+            register_mods(mods);
+        }
+        break;
+
+    case PAREN:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                SEND_STRING("() ");
+            } else {
+                SEND_STRING("()");
+                tap_code(KC_LEFT);
+            }
+            register_mods(mods);
+        }
+        break;
+
+    case ARROW:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                SEND_STRING("-> ");
+            } else {
+                SEND_STRING("=> ");
+            }
+            register_mods(mods);
+        }
+        break;
+
+    case QUOTE:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                SEND_STRING("\"\"");
+            } else {
+                SEND_STRING("''");
+            }
+            tap_code(KC_LEFT);
+            register_mods(mods);
+        }
+        break;
+
+    case CDDIR:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                SEND_STRING("cd ../");
+            } else {
+                SEND_STRING("cd ~/");
+            }
+            register_mods(mods);
+        }
+        break;
+
     case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
         num_mode_enable(record);
         return false;
 
     case SL_NUMX: // TURN OFF SMART LAYER FOR _NUM LAYER
         num_mode_disable();
+        return false;
+
+    case SL_UTLO: // TURN ON SMART LAYER FOR _UTL LAYER
+        utl_mode_enable(record);
         return false;
 
     case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER

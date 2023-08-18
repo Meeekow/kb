@@ -1,6 +1,51 @@
 #include "smart_layer.h"
 #include "custom_keycodes.h"
 
+
+/* -------- Util Mode -------- */
+static bool _utl_mode_active = false;
+static uint16_t utl_mode_timer;
+// Turn util mode on. To be called from a custom keycode
+void utl_mode_enable(keyrecord_t *record) {
+    if (record->event.pressed) {
+        layer_on(_UTL);
+        utl_mode_timer = timer_read();
+    } else {
+        if (timer_elapsed(utl_mode_timer) < TAPPING_TERM) {
+            // Tapping enables layer mode
+            _utl_mode_active = true;
+        } else {
+            // Holding treats as a normal LT
+            layer_off(_UTL);
+        }
+    }
+}
+
+// Turn util mode off.
+void utl_mode_disable(void) {
+    _utl_mode_active = false;
+    layer_off(_UTL);
+}
+
+void utl_mode_process(uint16_t keycode, keyrecord_t *record) {
+    // Assess if we should exit layermode or continue processing normally.
+    switch (keycode) {
+        case TWM_J:
+        case TWM_K:
+        case REPEAT:
+        case KC_1 ... KC_0:
+            // process the code and stay in the mode *dabs*
+            break;
+        default:
+            // All other keys disable the layer mode on keyup.
+            if (!record->event.pressed) {
+                utl_mode_disable();
+            }
+            break;
+    }
+}
+
+
 /* -------- Number Mode -------- */
 static bool _num_mode_active = false;
 static uint16_t num_mode_timer;
@@ -99,12 +144,15 @@ void twm_mode_process(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+
 /* -------- Process Record -------- */
 void process_layermodes(uint16_t keycode, keyrecord_t *record) {
     if (_num_mode_active) {
         num_mode_process(keycode, record);
     } else if (_twm_mode_active) {
         twm_mode_process(keycode, record);
+    } else if (_utl_mode_active) {
+        utl_mode_process(keycode, record);
     }
 }
 
