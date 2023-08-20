@@ -58,9 +58,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
-// flow_config should correspond to following format:
-// * layer keycode
-// * modifier keycode
 const uint16_t flow_config[FLOW_COUNT][2] = {
     {OS_NAV, KC_LGUI},
     {OS_NAV, KC_LALT},
@@ -70,9 +67,6 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
 };
 
 
-// for layers configuration follow this format:
-// * custom layer key
-// * layer name
 const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
     {OS_NAV, _NAV},
     {OS_SYM, _SYM},
@@ -113,191 +107,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         break;
     */
 
-    case CTL_BS: // CTRL + BACKSPACE
-        if (record->event.pressed) {
-            tap_code16(C(KC_BSPC));
-        }
-        break;
+    case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
+        num_mode_enable(record);
+        return false;
 
-    case CTL_A: // CTRL + A
-        if (record->event.pressed) {
-            tap_code16(C(KC_A));
-        }
-        break;
+    case SL_NUMX: // TURN OFF SMART LAYER FOR _NUM LAYER
+        num_mode_disable();
+        return false;
 
-    case CTL_C: // CTRL + C
-        if (record->event.pressed) {
-            tap_code16(C(KC_C));
-        }
-        break;
+    case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER
+        twm_mode_enable(record);
+        return false;
 
-    case CTL_I: // CTRL + I
-        if (record->event.pressed) {
-            tap_code16(C(KC_I));
-        }
-        break;
-
-    case CTL_L: // CTRL + L
-        if (record->event.pressed) {
-            tap_code16(C(KC_L));
-        }
-        break;
-
-    case CTL_R: // CTRL + R
-        if (record->event.pressed) {
-            tap_code16(C(KC_R));
-        }
-        break;
-
-    case CTL_S: // CTRL + S
-        if (record->event.pressed) {
-            tap_code16(C(KC_S));
-        }
-        break;
-
-    case CTL_V: // CTRL + V
-        if (record->event.pressed) {
-            tap_code16(C(KC_V));
-        }
-        break;
-
-    case CTL_W: // CTRL + W
-        if (record->event.pressed) {
-            tap_code16(C(KC_W));
-        }
-        break;
-
-    case CTL_Z: // CTRL + Z
-        if (record->event.pressed) {
-            tap_code16(C(KC_Z));
-        }
-        break;
-
-    case TAB_BCK: // CTRL + SHIFT + TAB
-        if (record->event.pressed) {
-            tap_code16(C(S(KC_TAB)));
-        }
-        break;
-
-    case TAB_FWD: // CTRL + TAB
-        if (record->event.pressed) {
-            tap_code16(C(KC_TAB));
-        }
-        break;
-
-    case TWM_S1:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_1));
-        }
-        break;
-
-    case TWM_S2:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_2));
-        }
-        break;
-
-    case TWM_S3:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_3));
-        }
-        break;
-
-    case TWM_S4:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_4));
-        }
-        break;
-
-    case TWM_S5:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_5));
-        }
-        break;
-
-    case TWM_S6:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_6));
-        }
-        break;
-
-    case TWM_S7:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_7));
-        }
-        break;
-
-    case TWM_S8:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_8));
-        }
-        break;
-
-    case TWM_S9:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_9));
-        }
-        break;
-
-    case TWM_TER:
-        if (record->event.pressed) {
-          tap_code16(LGUI(LSFT(KC_ENT)));
-        }
-        break;
-
-    case TWM_RET:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_ENT));
-        }
-        break;
-
-    case TWM_RUN:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_P));
-        }
-        break;
-
-    case TWM_H:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_H));
-        }
-        break;
-
-    case TWM_J:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_J));
-        }
-        break;
-
-    case TWM_K:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_K));
-        }
-        break;
-
-    case TWM_L:
-        if (record->event.pressed) {
-          tap_code16(LGUI(KC_L));
-        }
-        break;
-
-    case TWM_C:
-        if (record->event.pressed) {
-          tap_code16(LGUI(LSFT(KC_C)));
-        }
-        break;
-
-    case TWM_SSQ: // HARD RESTART
-        if (record->event.pressed) {
-          tap_code16(LGUI(LSFT(KC_Q)));
-        }
-        break;
-
-    case TWM_SCSQ: // PATCH RESTART
-        if (record->event.pressed) {
-          tap_code16(LGUI(LCTL(LSFT(KC_Q))));
-        }
-        break;
+    case SL_TWMX: // TURN OFF SMART LAYER FOR _TWM LAYER
+        twm_mode_disable();
+        return false;
 
     case CDDIR:
         if (record->event.pressed) {
@@ -317,32 +141,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
             clear_oneshot_mods();
             unregister_mods(MOD_MASK_CSAG);
             if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                SEND_STRING("() => {}");
-                tap_code16(KC_LEFT);
-                tap_code16(KC_ENT);
+                SEND_STRING("() => {}" SS_TAP(X_END) SS_TAP(X_LEFT) SS_DELAY(100) SS_TAP(X_ENTER));
             } else {
-                SEND_STRING("()");
-                tap_code16(KC_LEFT);
+                SEND_STRING("()" SS_TAP(X_LEFT));
             }
             register_mods(mods);
         }
         break;
-
-    case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
-        num_mode_enable(record);
-        return false;
-
-    case SL_NUMX: // TURN OFF SMART LAYER FOR _NUM LAYER
-        num_mode_disable();
-        return false;
-
-    case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER
-        twm_mode_enable(record);
-        return false;
-
-    case SL_TWMX: // TURN OFF SMART LAYER FOR _TWM LAYER
-        twm_mode_disable();
-        return false;
 
     case PANIC: // CLEAR EVERYTHING
         clear_oneshot_mods();
