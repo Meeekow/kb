@@ -38,14 +38,10 @@ enum keycodes {
    TWM_C   ,
    TWM_SSQ ,
    TWM_SCSQ,
-   PAREN   ,
-   BRACE   ,
-   ARROW   ,
-   QUOTE   ,
    CDDIR   ,
+   PARENS  ,
    SL_NUMO ,
    SL_NUMX ,
-   SL_UTLO ,
    SL_TWMO ,
    SL_TWMX ,
    PANIC   ,
@@ -55,13 +51,9 @@ enum keycodes {
 enum layers {
     _ABC,
     _NAV,
-    _UTL,
     _SYM,
     _NUM,
     _TWM,
     _EXT,
 };
-
-
-#define OS_SFT OSM(MOD_LSFT)
 

@@ -24,24 +24,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SCLN,
-      OS_NAV, KC_SPC, SL_UTLO, OS_SYM),
+      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
 
    [_NAV] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CDDIR,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_I,         KC_DEL , CTL_BS , KC_BSPC, KC_TAB , KC_INS ,
-      KC_TRNS, PANIC, REPEAT, SL_NUMO),
-
-   [_UTL] = LAYOUT_split_3x5_2(
-      KC_7 , KC_5 , KC_3 , KC_1  , KC_9 ,                KC_8 , KC_0  , KC_2 , KC_4 , KC_6 ,
-      TWM_J, BRACE, PAREN, KC_ESC, KC_NO,                KC_NO, KC_TAB, ARROW, QUOTE, TWM_K,
-      KC_NO, KC_NO, KC_NO, KC_NO , KC_NO,                KC_NO, KC_NO , KC_NO, KC_NO, KC_NO,
-      KC_LSFT, KC_TRNS, KC_TRNS, KC_LSFT),
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L,         KC_DEL , CTL_BS , KC_BSPC, KC_TAB , KC_INS ,
+      KC_TRNS, CTL_I, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_CIRC, KC_LPRN, KC_RPRN, KC_DLR , KC_UNDS,       KC_HASH, KC_PERC, KC_RABK, KC_LABK, KC_AT  ,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, KC_COLN, KC_LSFT, KC_GRV , KC_QUES,
-      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_AMPR, KC_ASTR, KC_DQUO, CDDIR  ,
+      KC_CIRC, KC_LPRN, KC_RPRN, KC_DLR , KC_UNDS,       KC_HASH, KC_COLN, KC_RABK, KC_LABK, KC_AT  ,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, PARENS , KC_LSFT, KC_GRV , KC_QUES,
+      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_AMPR, KC_ASTR, KC_DQUO, KC_PERC,
       SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -51,9 +45,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       SL_NUMX, KC_TRNS, KC_BSPC, KC_TRNS),
 
    [_TWM] = LAYOUT_split_3x5_2(
-      TWM_S1 , TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5 ,       TWM_S6 , TWM_S7 , TWM_S8 , TWM_S9 , TWM_SCSQ,
-      KC_NO  , TWM_TER, TWM_RET, TWM_RUN, KC_NO  ,       TWM_H  , TWM_J  , TWM_K  , TWM_L  , TWM_C   ,
-      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,       KC_NO  , KC_NO  , KC_NO  , KC_NO  , TWM_SSQ ,
+      TWM_S1, TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5,         TWM_S6, TWM_S7, TWM_S8, TWM_S9, TWM_SCSQ,
+      KC_NO , TWM_TER, TWM_RET, TWM_RUN, KC_NO ,         TWM_H , TWM_J , TWM_K , TWM_L , TWM_C,
+      KC_NO , KC_NO  , KC_NO  , KC_NO  , KC_NO ,         KC_NO , KC_NO , KC_NO , KC_NO , TWM_SSQ,
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
 
    [_EXT] = LAYOUT_split_3x5_2(
@@ -193,239 +187,115 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case TWM_S1:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_1);
-          unregister_code(KC_1);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_1));
         }
         break;
 
     case TWM_S2:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_2);
-          unregister_code(KC_2);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_2));
         }
         break;
 
     case TWM_S3:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_3);
-          unregister_code(KC_3);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_3));
         }
         break;
 
     case TWM_S4:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_4);
-          unregister_code(KC_4);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_4));
         }
         break;
 
     case TWM_S5:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_5);
-          unregister_code(KC_5);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_5));
         }
         break;
 
     case TWM_S6:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_6);
-          unregister_code(KC_6);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_6));
         }
         break;
 
     case TWM_S7:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_7);
-          unregister_code(KC_7);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_7));
         }
         break;
 
     case TWM_S8:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_8);
-          unregister_code(KC_8);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_8));
         }
         break;
 
     case TWM_S9:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_9);
-          unregister_code(KC_9);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_9));
         }
         break;
 
     case TWM_TER:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_LSFT);
-          register_code(KC_ENT);
-          unregister_code(KC_ENT);
-          unregister_code(KC_LSFT);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(LSFT(KC_ENT)));
         }
         break;
 
     case TWM_RET:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_ENT);
-          unregister_code(KC_ENT);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_ENT));
         }
         break;
 
     case TWM_RUN:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_P);
-          unregister_code(KC_P);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_P));
         }
         break;
 
     case TWM_H:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_H);
-          unregister_code(KC_H);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_H));
         }
         break;
 
     case TWM_J:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_J);
-          unregister_code(KC_J);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_J));
         }
         break;
 
     case TWM_K:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_K);
-          unregister_code(KC_K);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_K));
         }
         break;
 
     case TWM_L:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_L);
-          unregister_code(KC_L);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(KC_L));
         }
         break;
 
     case TWM_C:
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_LSFT);
-          register_code(KC_C);
-          unregister_code(KC_C);
-          unregister_code(KC_LSFT);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(LSFT(KC_C)));
         }
         break;
 
     case TWM_SSQ: // HARD RESTART
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_LSFT);
-          register_code(KC_Q);
-          unregister_code(KC_Q);
-          unregister_code(KC_LSFT);
-          unregister_code(KC_LGUI);
+          tap_code16(LGUI(LSFT(KC_Q)));
         }
         break;
 
     case TWM_SCSQ: // PATCH RESTART
         if (record->event.pressed) {
-          register_code(KC_LGUI);
-          register_code(KC_LCTL);
-          register_code(KC_LSFT);
-          register_code(KC_Q);
-          unregister_code(KC_Q);
-          unregister_code(KC_LSFT);
-          unregister_code(KC_LCTL);
-          unregister_code(KC_LGUI);
-        }
-        break;
-
-    case BRACE:
-        if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                SEND_STRING("{}");
-                tap_code(KC_LEFT);
-                tap_code(KC_ENT);
-            } else {
-                SEND_STRING("{}");
-                tap_code(KC_LEFT);
-            }
-            register_mods(mods);
-        }
-        break;
-
-    case PAREN:
-        if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                SEND_STRING("() ");
-            } else {
-                SEND_STRING("()");
-                tap_code(KC_LEFT);
-            }
-            register_mods(mods);
-        }
-        break;
-
-    case ARROW:
-        if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                SEND_STRING("-> ");
-            } else {
-                SEND_STRING("=> ");
-            }
-            register_mods(mods);
-        }
-        break;
-
-    case QUOTE:
-        if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                SEND_STRING("\"\"");
-            } else {
-                SEND_STRING("''");
-            }
-            tap_code(KC_LEFT);
-            register_mods(mods);
+          tap_code16(LGUI(LCTL(LSFT(KC_Q))));
         }
         break;
 
@@ -442,16 +312,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
+    case PARENS:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                SEND_STRING("() => {}");
+                tap_code16(KC_LEFT);
+                tap_code16(KC_ENT);
+            } else {
+                SEND_STRING("()");
+                tap_code16(KC_LEFT);
+            }
+            register_mods(mods);
+        }
+        break;
+
     case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
         num_mode_enable(record);
         return false;
 
     case SL_NUMX: // TURN OFF SMART LAYER FOR _NUM LAYER
         num_mode_disable();
-        return false;
-
-    case SL_UTLO: // TURN ON SMART LAYER FOR _UTL LAYER
-        utl_mode_enable(record);
         return false;
 
     case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER
