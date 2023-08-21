@@ -24,18 +24,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SCLN,
-      OS_NAV, KC_SPC, KC_ESC, OS_SYM),
+      OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
-   [_NAV] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CDDIR,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+   [_UTL] = LAYOUT_split_3x5_2(
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L,         KC_DEL , CTL_BS , KC_BSPC, KC_TAB , KC_INS ,
-      KC_TRNS, CTL_I, REPEAT, SL_NUMO),
+      UNDREDO, UPDOWN , CTL_I  , CPYPSTA, CTL_A,         KC_DEL , CTL_BS , KC_BSPC, KC_TAB , KC_INS ,
+      KC_TRNS, SL_NUMO, REPEAT, ALTREP),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_CIRC, KC_LPRN, KC_RPRN, KC_DLR , KC_UNDS,       KC_HASH, KC_COLN, KC_RABK, KC_LABK, KC_AT  ,
+      KC_CIRC, KC_LPRN, KC_RPRN, KC_DLR , KC_UNDS,       KC_HASH, KC_ASTR, KC_RABK, KC_LABK, KC_AT  ,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, PARENS , KC_LSFT, KC_GRV , KC_QUES,
-      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_AMPR, KC_ASTR, KC_DQUO, KC_PERC,
+      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_COLN, KC_AMPR, KC_DQUO, KC_PERC,
       SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -54,24 +54,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_NO  , KC_PSCR,
       KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6 , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      KC_NO, KC_NO, KC_TRNS, KC_NO),
+      KC_NO, CDDIR, KC_TRNS, KC_NO),
 };
 
 
 const uint16_t flow_config[FLOW_COUNT][2] = {
-    {OS_NAV, KC_LGUI},
-    {OS_NAV, KC_LALT},
-    {OS_NAV, KC_LSFT},
-    {OS_NAV, KC_LCTL},
+    {OS_UTL, KC_LGUI},
+    {OS_UTL, KC_LALT},
+    {OS_UTL, KC_LSFT},
+    {OS_UTL, KC_LCTL},
     {OS_SYM, KC_LSFT},
 };
 
 
 const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
-    {OS_NAV, _NAV},
+    {OS_UTL, _UTL},
     {OS_SYM, _SYM},
     {OS_EXT, _EXT},
 };
+
+
+uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+    switch (keycode) {
+        case UNDREDO: return C(KC_Y);
+        case UPDOWN : return C(KC_U);
+    }
+    return KC_TRNS;
+}
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
@@ -80,7 +89,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    if (!update_flow(keycode, record->event.pressed, record->event.key)) return false;
 
    // REPEAT KEY
-   if (!process_repeat_key(keycode, record, REPEAT)) return false;
+   // if (!process_repeat_key(keycode, record, REPEAT)) return false;
+   if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) return false;
 
    // SMART LAYER
    process_layermodes(keycode, record);
@@ -90,6 +100,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    const uint8_t oneshot_mods = get_oneshot_mods();
 
    switch (keycode) {
+
     /*
     case LT(_NUM, KC_F15): // SHIFT on tap; Access NUM layer on hold
         if (record->tap.count > 0) {
@@ -146,6 +157,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 SEND_STRING("()" SS_TAP(X_LEFT));
             }
             register_mods(mods);
+        }
+        break;
+
+    case CPYPSTA:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                tap_code16(S(KC_INS));
+            } else {
+                tap_code16(C(KC_INS));
+            }
+            register_mods(mods);
+        }
+        break;
+
+    case UPDOWN:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                tap_code16(C(KC_U));
+            } else {
+                tap_code16(C(KC_D));
+            }
+            register_mods(mods);
+        }
+        break;
+
+    case UNDREDO:
+        if (record->event.pressed) {
+            tap_code16(C(KC_Z));
         }
         break;
 

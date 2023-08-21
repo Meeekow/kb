@@ -4,22 +4,26 @@
 
 enum keycodes {
    REPEAT = SAFE_RANGE,
-   OS_NAV  ,
-   OS_SYM  ,
-   OS_EXT  ,
-   SL_NUMO ,
-   SL_NUMX ,
-   SL_TWMO ,
-   SL_TWMX ,
-   CDDIR   ,
-   PARENS  ,
-   PANIC   ,
+   ALTREP ,
+   OS_UTL ,
+   OS_SYM ,
+   OS_EXT ,
+   SL_NUMO,
+   SL_NUMX,
+   SL_TWMO,
+   SL_TWMX,
+   CDDIR  ,
+   PARENS ,
+   CPYPSTA,
+   UPDOWN ,
+   UNDREDO,
+   PANIC  ,
 };
 
 
 enum layers {
     _ABC,
-    _NAV,
+    _UTL,
     _SYM,
     _NUM,
     _TWM,
@@ -28,10 +32,7 @@ enum layers {
 
 
 // CTRL + LETTER
-#define CTL_Z C(KC_Z)
 #define CTL_A C(KC_A)
-#define CTL_C C(KC_C)
-#define CTL_V C(KC_V)
 #define CTL_L C(KC_L)
 #define CTL_S C(KC_S)
 #define CTL_W C(KC_W)
