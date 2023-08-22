@@ -27,15 +27,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, UPDOWN,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, VI_VAP,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S ,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      UNDREDO, CTL_L  , CTL_I  , CPYPSTA, CTL_A ,        VI_VIW , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
-      KC_TRNS, SL_NUMO, REPEAT, ALTREP),
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L ,        VI_IW  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      KC_TRNS, CTL_I, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_CIRC, KC_LPRN, KC_RPRN, KC_DLR , KC_UNDS,       KC_HASH, KC_ASTR, KC_RABK, KC_LABK, KC_AT  ,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, PARENS , KC_LSFT, KC_GRV , KC_QUES,
-      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_COLN, KC_AMPR, KC_DQUO, KC_PERC,
+      KC_CIRC, KC_RABK, KC_LABK, KC_DLR , KC_UNDS,       KC_HASH, KC_COLN, KC_ASTR, KC_PERC, KC_AT  ,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, KC_LPRN, KC_LSFT, KC_RPRN, KC_QUES,
+      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_GRV , KC_AMPR, KC_DQUO, VI_QS  ,
       SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -46,8 +46,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_TWM] = LAYOUT_split_3x5_2(
       TWM_S1, TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5,         TWM_S6, TWM_S7, TWM_S8, TWM_S9, TWM_SCSQ,
-      KC_NO , TWM_TER, TWM_RET, TWM_RUN, KC_NO ,         TWM_H , TWM_J , TWM_K , TWM_L , TWM_C,
-      KC_NO , KC_NO  , KC_NO  , KC_NO  , KC_NO ,         KC_NO , KC_NO , KC_NO , KC_NO , TWM_SSQ,
+      KC_NO , TWM_TER, TWM_RET, TWM_RUN, KC_NO ,         TWM_H , TWM_J , TWM_K , TWM_L , TWM_C   ,
+      KC_NO , KC_NO  , KC_NO  , KC_NO  , KC_NO ,         KC_NO , KC_NO , KC_NO , KC_NO , TWM_SSQ ,
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
 
    [_EXT] = LAYOUT_split_3x5_2(
@@ -74,19 +74,31 @@ const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
 };
 
 
-uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
-    bool shifted = (mods & MOD_MASK_SHIFT);
-    switch (keycode) {
-        case UPDOWN :
-            if (shifted) {
-                return C(KC_D);
-            } else {
-                return C(KC_U);
-            }
-        case UNDREDO: return C(KC_Y);
-    }
+void ensure_lowercase(bool is_shifted) {
+    clear_oneshot_mods();
+    unregister_mods(MOD_MASK_CSAG);
+}
 
-    return KC_TRNS;
+
+bool send_string_vi_mv(bool is_shifted, bool is_yank, uint8_t movement, bool is_word, keyrecord_t *record) {
+    if (record->event.pressed) {
+        ensure_lowercase(is_shifted);
+
+        // when yanking, add the y
+        if(is_yank){
+            tap_code(KC_Y);
+        }
+
+        // Movement is either a or i
+        tap_code(movement);
+
+        // and if there's a word, add the w or W.
+        if(is_word) {
+            uint16_t word_code = is_shifted ? S(KC_W) : KC_W;
+            tap_code16(word_code);
+        }
+    }
+    return false;
 }
 
 
@@ -96,14 +108,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    if (!update_flow(keycode, record->event.pressed, record->event.key)) return false;
 
    // REPEAT KEY
-   if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) return false;
+   if (!process_repeat_key(keycode, record, REPEAT)) return false;
 
    // SMART LAYER
    process_layermodes(keycode, record);
 
-   // PAIRS MACRO
-   const uint8_t mods = get_mods();
-   const uint8_t oneshot_mods = get_oneshot_mods();
+   // FOR KEY OVERRIDE
+   bool is_shifted = (get_mods() & MOD_MASK_SHIFT) || (get_oneshot_mods() & MOD_MASK_SHIFT);
 
    switch (keycode) {
 
@@ -142,78 +153,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case CDDIR:
         if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                SEND_STRING("cd ../");
-            } else {
-                SEND_STRING("cd ~/");
-            }
-            register_mods(mods);
+            SEND_STRING("cd ~/");
         }
-        break;
+        return false;
 
-    case PARENS:
+    case VI_VAP:
         if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                SEND_STRING("() => {}" SS_TAP(X_END) SS_TAP(X_LEFT) SS_DELAY(100) SS_TAP(X_ENTER));
-            } else {
-                SEND_STRING("()" SS_TAP(X_LEFT));
-            }
-            register_mods(mods);
+            SEND_STRING("vap");
         }
-        break;
+        return false;
 
-    case CPYPSTA:
+    case VI_QS:
         if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                tap_code16(S(KC_INS));
-            } else {
-                tap_code16(C(KC_INS));
-            }
-            register_mods(mods);
+            SEND_STRING("ZQ");
         }
-        break;
+        return false;
 
-    case UNDREDO:
-        if (record->event.pressed) {
-            tap_code16(C(KC_Z));
-        }
-        break;
-
-    case VI_VIW:
-        if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                tap_code16(KC_V);
-                tap_code16(KC_I);
-                tap_code16(S(KC_W));
-                register_mods(mods);
-            } else {
-                tap_code16(KC_V);
-                tap_code16(KC_I);
-                tap_code16(KC_W);
-            }
-        }
-        break;
-
-    case UPDOWN:
-        if (record->event.pressed) {
-            clear_oneshot_mods();
-            unregister_mods(MOD_MASK_CSAG);
-            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-                tap_code16(C(KC_U));
-            } else {
-                tap_code16(C(KC_D));
-            }
-            register_mods(mods);
-        }
-        break;
+    case VI_IW: return send_string_vi_mv(is_shifted, false, KC_I, true, record);
 
     case PANIC: // CLEAR EVERYTHING
         clear_oneshot_mods();
