@@ -15,8 +15,9 @@ enum keycodes {
    CDDIR  ,
    PARENS ,
    CPYPSTA,
-   UPDOWN ,
    UNDREDO,
+   VI_VIW ,
+   UPDOWN ,
    PANIC  ,
 };
 

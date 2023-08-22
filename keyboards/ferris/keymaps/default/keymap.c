@@ -27,9 +27,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      UNDREDO, UPDOWN , CTL_I  , CPYPSTA, CTL_A,         KC_DEL , CTL_BS , KC_BSPC, KC_TAB , KC_INS ,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, UPDOWN,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S ,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
+      UNDREDO, CTL_L  , CTL_I  , CPYPSTA, CTL_A ,        VI_VIW , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
       KC_TRNS, SL_NUMO, REPEAT, ALTREP),
 
    [_SYM] = LAYOUT_split_3x5_2(
@@ -51,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
 
    [_EXT] = LAYOUT_split_3x5_2(
-      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_NO  , KC_PSCR,
+      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_INS , KC_PSCR,
       KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6 , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
       KC_NO, CDDIR, KC_TRNS, KC_NO),
@@ -75,10 +75,17 @@ const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
 
 
 uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+    bool shifted = (mods & MOD_MASK_SHIFT);
     switch (keycode) {
+        case UPDOWN :
+            if (shifted) {
+                return C(KC_D);
+            } else {
+                return C(KC_U);
+            }
         case UNDREDO: return C(KC_Y);
-        case UPDOWN : return C(KC_U);
     }
+
     return KC_TRNS;
 }
 
@@ -89,7 +96,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    if (!update_flow(keycode, record->event.pressed, record->event.key)) return false;
 
    // REPEAT KEY
-   // if (!process_repeat_key(keycode, record, REPEAT)) return false;
    if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) return false;
 
    // SMART LAYER
@@ -173,6 +179,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         break;
 
+    case UNDREDO:
+        if (record->event.pressed) {
+            tap_code16(C(KC_Z));
+        }
+        break;
+
+    case VI_VIW:
+        if (record->event.pressed) {
+            clear_oneshot_mods();
+            unregister_mods(MOD_MASK_CSAG);
+            if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
+                tap_code16(KC_V);
+                tap_code16(KC_I);
+                tap_code16(S(KC_W));
+                register_mods(mods);
+            } else {
+                tap_code16(KC_V);
+                tap_code16(KC_I);
+                tap_code16(KC_W);
+            }
+        }
+        break;
+
     case UPDOWN:
         if (record->event.pressed) {
             clear_oneshot_mods();
@@ -183,12 +212,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
                 tap_code16(C(KC_D));
             }
             register_mods(mods);
-        }
-        break;
-
-    case UNDREDO:
-        if (record->event.pressed) {
-            tap_code16(C(KC_Z));
         }
         break;
 
@@ -203,6 +226,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         caps_word_off();
         return false;
       }
+
   return true;
 }
 
