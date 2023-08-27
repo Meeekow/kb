@@ -34,9 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Pick good defaults for enabling homerow modifiers
 #define TAPPING_TERM 200
-#define PERMISSIVE_HOLD
-// Uncomment the line below if not using tap toggle feature
-#define TAPPING_FORCE_HOLD
+#define HOLD_ON_OTHER_KEY_PRESS
 
 // Underglow configuration
 #ifdef RGBLIGHT_ENABLE
@@ -61,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define USB_VBUS_PIN GP19
 
 // flow_config
-#define FLOW_COUNT 5
+#define FLOW_COUNT 4
 
 // flow_layers_config
 #define FLOW_LAYERS_COUNT 3

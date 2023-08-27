@@ -21,21 +21,21 @@ combo_t key_combos[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_ABC] = LAYOUT_split_3x5_2(
-      KC_B, KC_L, KC_D, KC_W, KC_Z,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
-      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
-      KC_Q, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SCLN,
+      KC_B  , KC_L, KC_D, KC_W, KC_Q,                    KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
+      KC_N  , KC_R, KC_T, KC_S, KC_G,                    KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
+      LSHIFT, KC_X, KC_M, KC_C, KC_V,                    KC_K, KC_P, KC_DOT, KC_QUOT, RSHIFT ,
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, VI_VAP,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S ,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L ,        VI_IW  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
-      KC_TRNS, CTL_I, REPEAT, SL_NUMO),
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CDDIR,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_CIRC, KC_RABK, KC_LABK, KC_DLR , KC_UNDS,       KC_HASH, KC_COLN, KC_ASTR, KC_PERC, KC_AT  ,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, KC_LPRN, KC_LSFT, KC_RPRN, KC_QUES,
-      KC_BSLS, KC_LCBR, KC_RCBR, KC_SLSH, KC_TILD,       KC_PIPE, KC_GRV , KC_AMPR, KC_DQUO, VI_QS  ,
+      KC_UNDS, KC_LPRN, KC_RPRN, KC_DLR , KC_RBRC,       KC_AT  , KC_DQUO, KC_AMPR, KC_PIPE, KC_CIRC,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_SLSH, KC_COLN, PARENS , KC_GRV , KC_QUES,
+      KC_BSLS, KC_LABK, KC_RABK, KC_LCBR, KC_RCBR,       KC_TILD, KC_ASTR, BRACES , KC_PERC, KC_HASH,
       SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_INS , KC_PSCR,
       KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6 , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      KC_NO, CDDIR, KC_TRNS, KC_NO),
+      KC_NO, KC_NO, KC_TRNS, KC_NO),
 };
 
 
@@ -63,7 +63,6 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
     {OS_UTL, KC_LALT},
     {OS_UTL, KC_LSFT},
     {OS_UTL, KC_LCTL},
-    {OS_SYM, KC_LSFT},
 };
 
 
@@ -74,31 +73,16 @@ const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
 };
 
 
-void ensure_lowercase(bool is_shifted) {
-    clear_oneshot_mods();
-    unregister_mods(MOD_MASK_CSAG);
-}
-
-
-bool send_string_vi_mv(bool is_shifted, bool is_yank, uint8_t movement, bool is_word, keyrecord_t *record) {
-    if (record->event.pressed) {
-        ensure_lowercase(is_shifted);
-
-        // when yanking, add the y
-        if(is_yank){
-            tap_code(KC_Y);
-        }
-
-        // Movement is either a or i
-        tap_code(movement);
-
-        // and if there's a word, add the w or W.
-        if(is_word) {
-            uint16_t word_code = is_shifted ? S(KC_W) : KC_W;
-            tap_code16(word_code);
-        }
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LSHIFT:
+        case RSHIFT:
+            // Immediately select the hold action when another key is pressed.
+            return true;
+        default:
+            // Do not select the hold action when another key is pressed.
+            return false;
     }
-    return false;
 }
 
 
@@ -112,9 +96,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
    // SMART LAYER
    process_layermodes(keycode, record);
-
-   // FOR KEY OVERRIDE
-   bool is_shifted = (get_mods() & MOD_MASK_SHIFT) || (get_oneshot_mods() & MOD_MASK_SHIFT);
 
    switch (keycode) {
 
@@ -157,23 +138,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         return false;
 
-    case VI_VAP:
+    case PARENS:
         if (record->event.pressed) {
-            SEND_STRING("vap");
+            SEND_STRING("()" SS_TAP(X_LEFT));
         }
         return false;
 
-    case VI_QS:
+    case BRACES:
         if (record->event.pressed) {
-            SEND_STRING("ZQ");
+            SEND_STRING("{}" SS_TAP(X_LEFT));
         }
         return false;
-
-    case VI_IW: return send_string_vi_mv(is_shifted, false, KC_I, true, record);
 
     case PANIC: // CLEAR EVERYTHING
-        clear_oneshot_mods();
         clear_mods();
+        clear_oneshot_mods();
         if (get_oneshot_layer() != 0) {
             clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
         }
