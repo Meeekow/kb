@@ -13,7 +13,6 @@ enum keycodes {
    SL_TWMX,
    CDDIR  ,
    PARENS ,
-   BRACES ,
    PANIC  ,
 };
 
@@ -28,13 +27,10 @@ enum layers {
 };
 
 
-// MODTAP ON BOTTOM ROW PINKY
-#define LSHIFT LSFT_T(KC_Z)
-#define RSHIFT LSFT_T(KC_SCLN)
-
 // CTRL + LETTER
 #define CTL_A C(KC_A)
 #define CTL_C C(KC_C)
+#define CTL_D C(KC_D)
 #define CTL_I C(KC_I)
 #define CTL_L C(KC_L)
 #define CTL_R C(KC_R)

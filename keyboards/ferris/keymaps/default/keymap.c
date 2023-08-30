@@ -21,21 +21,21 @@ combo_t key_combos[] = {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_ABC] = LAYOUT_split_3x5_2(
-      KC_B  , KC_L, KC_D, KC_W, KC_Q,                    KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
-      KC_N  , KC_R, KC_T, KC_S, KC_G,                    KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
-      LSHIFT, KC_X, KC_M, KC_C, KC_V,                    KC_K, KC_P, KC_DOT, KC_QUOT, RSHIFT ,
-      OS_UTL, KC_SPC, KC_ESC, OS_SYM),
+      KC_B, KC_L, KC_D, KC_W, KC_Q,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
+      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
+      KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SCLN,
+      OS_UTL, KC_SPC, REPEAT, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CDDIR,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
-      KC_TRNS, PANIC, REPEAT, SL_NUMO),
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      KC_TRNS, PANIC, KC_ESC, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_UNDS, KC_LPRN, KC_RPRN, KC_DLR , KC_RBRC,       KC_AT  , KC_DQUO, KC_AMPR, KC_PIPE, KC_CIRC,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_SLSH, KC_COLN, PARENS , KC_GRV , KC_QUES,
-      KC_BSLS, KC_LABK, KC_RABK, KC_LCBR, KC_RCBR,       KC_TILD, KC_ASTR, BRACES , KC_PERC, KC_HASH,
+      KC_UNDS, KC_LPRN, KC_RPRN, KC_SLSH, KC_TILD,       KC_PIPE, KC_AT  , KC_LCBR, KC_RCBR, KC_HASH,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, KC_GRV , KC_LSFT, PARENS , KC_QUES,
+      KC_BSLS, KC_LABK, KC_RABK, KC_DLR , KC_PERC,       KC_AMPR, KC_COLN, KC_ASTR, KC_DQUO, KC_CIRC,
       SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_INS , KC_PSCR,
       KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6 , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      KC_NO, KC_NO, KC_TRNS, KC_NO),
+      KC_NO, CDDIR, KC_TRNS, KC_NO),
 };
 
 
@@ -63,6 +63,7 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
     {OS_UTL, KC_LALT},
     {OS_UTL, KC_LSFT},
     {OS_UTL, KC_LCTL},
+    {OS_SYM, KC_LSFT},
 };
 
 
@@ -71,19 +72,6 @@ const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
     {OS_SYM, _SYM},
     {OS_EXT, _EXT},
 };
-
-
-bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LSHIFT:
-        case RSHIFT:
-            // Immediately select the hold action when another key is pressed.
-            return true;
-        default:
-            // Do not select the hold action when another key is pressed.
-            return false;
-    }
-}
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
@@ -144,15 +132,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         return false;
 
-    case BRACES:
-        if (record->event.pressed) {
-            SEND_STRING("{}" SS_TAP(X_LEFT));
-        }
-        return false;
-
     case PANIC: // CLEAR EVERYTHING
-        clear_mods();
         clear_oneshot_mods();
+        clear_mods();
         if (get_oneshot_layer() != 0) {
             clear_oneshot_layer_state(ONESHOT_OTHER_KEY_PRESSED);
         }
