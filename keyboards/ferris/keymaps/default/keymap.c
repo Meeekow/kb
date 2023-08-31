@@ -24,18 +24,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Q,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SCLN,
-      OS_UTL, KC_SPC, REPEAT, OS_SYM),
+      OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CSDEL,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
-      KC_TRNS, PANIC, KC_ESC, SL_NUMO),
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_UNDS, KC_LPRN, KC_RPRN, KC_SLSH, KC_TILD,       KC_PIPE, KC_AT  , KC_LCBR, KC_RCBR, KC_HASH,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, KC_GRV , KC_LSFT, PARENS , KC_QUES,
-      KC_BSLS, KC_LABK, KC_RABK, KC_DLR , KC_PERC,       KC_AMPR, KC_COLN, KC_ASTR, KC_DQUO, KC_CIRC,
+      KC_UNDS, KC_LPRN, KC_RPRN, KC_DLR , KC_PERC,       KC_PIPE, KC_AT  , KC_LCBR, KC_RCBR, KC_HASH,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_LBRC,       KC_RBRC, KC_COLN, KC_LSFT, KC_GRV , KC_QUES,
+      KC_BSLS, KC_LABK, KC_RABK, KC_SLSH, KC_TILD,       KC_AMPR, ARWFUNC, KC_ASTR, KC_DQUO, KC_CIRC,
       SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -126,9 +126,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         return false;
 
-    case PARENS:
+    case ARWFUNC:
         if (record->event.pressed) {
-            SEND_STRING("()" SS_TAP(X_LEFT));
+            SEND_STRING("() => {}" SS_TAP(X_LEFT) SS_DELAY(25) SS_TAP(X_ENTER));
+        }
+        return false;
+
+    case CSDEL:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_DEL))));
         }
         return false;
 

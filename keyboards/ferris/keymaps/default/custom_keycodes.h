@@ -12,7 +12,8 @@ enum keycodes {
    SL_TWMO,
    SL_TWMX,
    CDDIR  ,
-   PARENS ,
+   ARWFUNC,
+   CSDEL  ,
    PANIC  ,
 };
 
@@ -30,7 +31,6 @@ enum layers {
 // CTRL + LETTER
 #define CTL_A C(KC_A)
 #define CTL_C C(KC_C)
-#define CTL_D C(KC_D)
 #define CTL_I C(KC_I)
 #define CTL_L C(KC_L)
 #define CTL_R C(KC_R)
