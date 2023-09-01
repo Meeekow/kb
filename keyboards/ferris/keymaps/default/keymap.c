@@ -27,9 +27,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CSDEL,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_L,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , COLON,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
       KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_INS , KC_PSCR,
       KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6 , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      KC_NO, CDDIR, KC_TRNS, KC_NO),
+      CSDEL, CDDIR, KC_TRNS, KC_NO),
 };
 
 
@@ -129,6 +129,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     case ARWFUNC:
         if (record->event.pressed) {
             SEND_STRING("() => {}" SS_TAP(X_LEFT) SS_DELAY(25) SS_TAP(X_ENTER));
+        }
+        return false;
+
+    case COLON:
+        if (record->event.pressed) {
+            SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) ":");
         }
         return false;
 

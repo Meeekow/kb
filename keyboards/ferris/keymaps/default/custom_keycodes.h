@@ -13,6 +13,7 @@ enum keycodes {
    SL_TWMX,
    CDDIR  ,
    ARWFUNC,
+   COLON  ,
    CSDEL  ,
    PANIC  ,
 };
