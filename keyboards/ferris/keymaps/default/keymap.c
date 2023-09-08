@@ -28,8 +28,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_UTL] = LAYOUT_split_3x5_2(
       CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , COLON,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COLON,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
       KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
