@@ -6,16 +6,16 @@
 
 
 enum combos {
-    COMBO_PANIC,
+    COMBO_ENTER,
     COMBO_LENGTH
 };
 
 uint16_t COMBO_LEN = COMBO_LENGTH;
 
-const uint16_t PROGMEM PANIC_COMBO[] = {KC_C, KC_P, COMBO_END};
+const uint16_t PROGMEM ENTER_COMBO[] = {KC_C, KC_P, COMBO_END};
 
 combo_t key_combos[] = {
-    [COMBO_PANIC] = COMBO(PANIC_COMBO, PANIC),
+    [COMBO_ENTER] = COMBO(ENTER_COMBO, KC_ENT),
 };
 
 
@@ -27,34 +27,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_L,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COLON,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      TAB_BCK, CTL_I  , COLON  , TAB_FWD, CTL_R,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, ALTAB,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S,         CTL_W  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
       KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
       KC_GRV , KC_LCBR, KC_LPRN, KC_LBRC, KC_PERC,       KC_CIRC, KC_RBRC, KC_RPRN, KC_RCBR, KC_TILD,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_ASTR, KC_COLN, KC_LSFT, KC_SLSH, KC_QUES,
-      KC_AT  , KC_LABK, KC_RABK, KC_UNDS, KC_PIPE,       KC_BSLS, KC_DLR , ARWFUNC, KC_DQUO, KC_HASH,
-      SL_TWMO, KC_TRNS, OS_EXT, KC_TRNS),
+      KC_HASH, KC_LABK, KC_RABK, KC_UNDS, KC_PIPE,       KC_BSLS, KC_DLR , KC_AT  , KC_DQUO, QK_BOOT,
+      CIW    , KC_TRNS, PANIC, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
-      KC_1   , KC_2   , KC_3   , KC_4   , KC_5 ,         KC_6 , KC_7   , KC_8   , KC_9   , KC_0   ,
-      KC_7   , KC_5   , KC_3   , KC_1   , KC_9 ,         KC_8 , KC_0   , KC_2   , KC_4   , KC_6   ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_NO,         KC_NO, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      SL_NUMX, KC_TRNS, KC_BSPC, KC_TRNS),
-
-   [_TWM] = LAYOUT_split_3x5_2(
-      TWM_S1, TWM_S2 , TWM_S3 , TWM_S4 , TWM_S5,         TWM_S6, TWM_S7, TWM_S8, TWM_S9, TWM_SCSQ,
-      KC_NO , TWM_TER, TWM_RET, TWM_RUN, KC_NO ,         TWM_H , TWM_J , TWM_K , TWM_L , TWM_C   ,
-      KC_NO , KC_NO  , KC_NO  , KC_NO  , KC_NO ,         KC_NO , KC_NO , KC_NO , KC_NO , TWM_SSQ ,
-      KC_TRNS, KC_LSFT, KC_LCTL, SL_TWMX),
-
-   [_EXT] = LAYOUT_split_3x5_2(
-      QK_BOOT, KC_NO  , KC_NO  , KC_NO  , KC_NO ,        KC_NO , KC_NO  , KC_NO  , KC_INS , KC_PSCR,
-      KC_F1  , KC_F2  , KC_F3  , KC_F4  , KC_F5 ,        KC_F6 , KC_F7  , KC_F8  , KC_F9  , KC_F10 ,
+      KC_F7  , KC_F5  , KC_F3  , KC_F1  , KC_F9,         KC_F8 , KC_F10 , KC_F2  , KC_F4  , KC_F6  ,
+      KC_7   , KC_5   , KC_3   , KC_1   , KC_9 ,         KC_8  , KC_0   , KC_2   , KC_4   , KC_6   ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,
-      CSDEL, CDDIR, KC_TRNS, KC_NO),
+      SL_NUMX, KC_TRNS, KC_BSPC, KC_TRNS),
 };
 
 
@@ -70,7 +58,6 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
 const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
     {OS_UTL, _UTL},
     {OS_SYM, _SYM},
-    {OS_EXT, _EXT},
 };
 
 
@@ -112,35 +99,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         num_mode_disable();
         return false;
 
-    case SL_TWMO: // TURN ON SMART LAYER FOR _TWM LAYER
-        twm_mode_enable(record);
-        return false;
-
-    case SL_TWMX: // TURN OFF SMART LAYER FOR _TWM LAYER
-        twm_mode_disable();
-        return false;
-
-    case CDDIR:
-        if (record->event.pressed) {
-            SEND_STRING("cd ~/");
-        }
-        return false;
-
-    case ARWFUNC:
-        if (record->event.pressed) {
-            SEND_STRING("() => {}" SS_TAP(X_LEFT) SS_DELAY(25) SS_TAP(X_ENTER));
-        }
-        return false;
-
     case COLON:
         if (record->event.pressed) {
             SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) ":");
         }
         return false;
 
-    case CSDEL:
+    case CIW:
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_DEL))));
+            SEND_STRING("c" SS_DELAY(25) "i" SS_DELAY(25) "w");
         }
         return false;
 
@@ -163,4 +130,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 void matrix_scan_user(void) {
     flow_matrix_scan();
 }
-
