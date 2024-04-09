@@ -8,9 +8,8 @@ enum keycodes {
    OS_SYM ,
    SL_NUMO,
    SL_NUMX,
-   COLON  ,
-   ALTAB  ,
    CIW    ,
+   COLON  ,
    PANIC  ,
 };
 
@@ -27,7 +26,6 @@ enum layers {
 #define CTL_A C(KC_A)
 #define CTL_C C(KC_C)
 #define CTL_I C(KC_I)
-#define CTL_R C(KC_R)
 #define CTL_S C(KC_S)
 #define CTL_V C(KC_V)
 #define CTL_W C(KC_W)
