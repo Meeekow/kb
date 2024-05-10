@@ -27,16 +27,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      ALTAB  , CTL_W  , TAB_BCK, TAB_FWD, QK_BOOT,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , CW_TOGG,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, COLON  ,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S  ,       CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_DEL ,
+      CW_TOGG, CTL_W  , TAB_BCK, TAB_FWD, QK_BOOT,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, WIN_D  ,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_ENT,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S  ,       CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CTL_R ,
       KC_TRNS, PANIC, REPEAT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
       KC_GRV , KC_LCBR, KC_LPRN, KC_LBRC, KC_PERC,       KC_CIRC, KC_RBRC, KC_RPRN, KC_RCBR, KC_TILD,
       KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_ASTR, KC_COLN, KC_LSFT, KC_SLSH, KC_QUES,
       KC_HASH, KC_LABK, KC_RABK, KC_UNDS, KC_PIPE,       KC_BSLS, KC_DLR , KC_AT  , KC_DQUO, QK_BOOT,
-      CIW    , COLON, PANIC, KC_TRNS),
+      CIW, COLON, PANIC, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
       KC_F7  , KC_F5  , KC_F3  , KC_F1  , KC_F9,         KC_F8 , KC_F10 , KC_F2  , KC_F4  , KC_F6  ,
@@ -101,7 +101,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case CIW:
         if (record->event.pressed) {
-            SEND_STRING("c" SS_DELAY(25) "i" SS_DELAY(25) "w");
+            SEND_STRING("c" SS_DELAY(10) "i" SS_DELAY(10) "w");
         }
         return false;
 

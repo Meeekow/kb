@@ -26,13 +26,16 @@ enum layers {
 #define CTL_A C(KC_A)
 #define CTL_C C(KC_C)
 #define CTL_I C(KC_I)
+#define CTL_R C(KC_R)
 #define CTL_S C(KC_S)
 #define CTL_V C(KC_V)
 #define CTL_W C(KC_W)
 #define CTL_Z C(KC_Z)
 #define CTL_BS C(KC_BSPC)
 
+// WIN + LETTER
+#define WIN_D G(KC_D)
+
 // TAB
-#define ALTAB   C(A(KC_TAB))
 #define TAB_BCK C(S(KC_TAB))
 #define TAB_FWD C(KC_TAB)
