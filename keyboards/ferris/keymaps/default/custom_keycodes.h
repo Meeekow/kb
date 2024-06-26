@@ -31,11 +31,9 @@ enum layers {
 #define CTL_V C(KC_V)
 #define CTL_W C(KC_W)
 #define CTL_X C(KC_X)
+#define CTL_Y C(KC_Y)
 #define CTL_Z C(KC_Z)
 #define CTL_BS C(KC_BSPC)
-
-// CTRL + SYMBOL
-#define CTL_SLASH C(KC_SLSH)
 
 // TAB
 #define TAB_BCK C(S(KC_TAB))
