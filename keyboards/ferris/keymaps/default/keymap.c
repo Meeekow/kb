@@ -9,11 +9,8 @@ enum combos {
     COMBO_ENTER,
     COMBO_LENGTH
 };
-
 uint16_t COMBO_LEN = COMBO_LENGTH;
-
 const uint16_t PROGMEM ENTER_COMBO[] = {KC_C, KC_P, COMBO_END};
-
 combo_t key_combos[] = {
     [COMBO_ENTER] = COMBO(ENTER_COMBO, KC_ENT),
 };
@@ -23,19 +20,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_ABC] = LAYOUT_split_3x5_2(
       KC_B, KC_L, KC_D, KC_W, KC_Q,                      KC_J, KC_F, KC_O   , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A   , KC_E   , KC_I   ,
-      KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_SCLN, KC_QUOT, KC_DOT ,
+      KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_COLN, KC_QUOT, KC_DOT ,
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_X,         KC_HOME, KC_PGDN, KC_PGUP, KC_END , REPEAT ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, CTL_S,         KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_DEL ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_Y,         CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_X ,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, REPEAT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, DELETE ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S ,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CW_TOGG,
       KC_TRNS, PANIC, KC_ENT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_GRV , KC_LCBR, KC_LPRN, KC_LBRC, KC_HASH,       KC_CIRC, KC_RBRC, KC_RPRN, KC_RCBR, KC_TILD,
-      KC_EXLM, KC_PLUS, KC_MINS, KC_EQL , KC_RABK,       KC_PIPE, KC_COLN, KC_LSFT, KC_AMPR, KC_QUES,
-      KC_PERC, KC_SLSH, KC_ASTR, KC_UNDS, KC_LABK,       KC_BSLS, KC_DLR , KC_AT  , KC_DQUO, QK_BOOT,
+      KC_LABK, KC_LCBR, KC_LPRN, KC_RABK, KC_UNDS,       KC_PERC, KC_AT  , KC_RPRN, KC_RCBR, KC_TILD,
+      KC_SLSH, KC_QUES, KC_EXLM, KC_DLR , KC_AMPR,       KC_HASH, KC_SCLN, KC_LSFT, KC_RBRC, KC_LBRC,
+      KC_ASTR, KC_PLUS, KC_EQL , KC_MINS, KC_PIPE,       KC_BSLS, KC_GRV , KC_CIRC, KC_DQUO, QK_BOOT,
       CIW, COLON, PANIC, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -99,6 +96,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         num_mode_disable();
         return false;
 
+    case DELETE:
+        if (record->event.pressed) {
+            SEND_STRING("f(" SS_DELAY(10) "d$");
+        }
+        return false;
+
     case CIW:
         if (record->event.pressed) {
             SEND_STRING("c" SS_DELAY(10) "i" SS_DELAY(10) "w");
@@ -107,7 +110,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case COLON:
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) ":");
+            SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) ":" SS_DELAY(10) SS_TAP(X_ESC));
         }
         return false;
 
