@@ -30,9 +30,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, PANIC, KC_ENT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_LABK, KC_LCBR, KC_LPRN, KC_RABK, KC_UNDS,       KC_PERC, KC_AT  , KC_RPRN, KC_RCBR, KC_TILD,
-      KC_SLSH, KC_QUES, KC_EXLM, KC_DLR , KC_AMPR,       KC_HASH, KC_SCLN, KC_LSFT, KC_RBRC, KC_LBRC,
-      KC_ASTR, KC_PLUS, KC_EQL , KC_MINS, KC_PIPE,       KC_BSLS, KC_GRV , KC_CIRC, KC_DQUO, QK_BOOT,
+      KC_LBRC, KC_LCBR, KC_LPRN, KC_RBRC, KC_GRV ,       KC_CIRC, KC_HASH, KC_RPRN, KC_RCBR, KC_TILD,
+      KC_QUES, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_UNDS, KC_DLR , KC_LSFT, KC_RABK, KC_LABK,
+      KC_PERC, KC_ASTR, KC_SLSH, KC_EXLM, KC_PIPE,       KC_BSLS, KC_AT  , KC_SCLN, KC_DQUO, QK_BOOT,
       CIW, COLON, PANIC, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -104,13 +104,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
     case CIW:
         if (record->event.pressed) {
-            SEND_STRING("c" SS_DELAY(10) "i" SS_DELAY(10) "w");
+            SEND_STRING("ciw");
         }
         return false;
 
     case COLON:
         if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) ":" SS_DELAY(10) SS_TAP(X_ESC));
+            SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) ":");
         }
         return false;
 
