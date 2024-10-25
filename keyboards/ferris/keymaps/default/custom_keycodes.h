@@ -9,8 +9,7 @@ enum keycodes {
    SL_NUMO,
    SL_NUMX,
    DELETE ,
-   CIW    ,
-   COLON  ,
+   CHNGDIR,
    PANIC  ,
 };
 

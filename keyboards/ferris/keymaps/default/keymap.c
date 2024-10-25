@@ -20,7 +20,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_ABC] = LAYOUT_split_3x5_2(
       KC_B, KC_L, KC_D, KC_W, KC_Q,                      KC_J, KC_F, KC_O   , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A   , KC_E   , KC_I   ,
-      KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_COLN, KC_QUOT, KC_DOT ,
+      KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT , KC_QUOT, KC_SLSH,
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
    [_UTL] = LAYOUT_split_3x5_2(
@@ -30,10 +30,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_TRNS, PANIC, KC_ENT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_LBRC, KC_LCBR, KC_LPRN, KC_RBRC, KC_GRV ,       KC_CIRC, KC_HASH, KC_RPRN, KC_RCBR, KC_TILD,
-      KC_QUES, KC_PLUS, KC_MINS, KC_EQL , KC_AMPR,       KC_UNDS, KC_DLR , KC_LSFT, KC_RABK, KC_LABK,
-      KC_PERC, KC_ASTR, KC_SLSH, KC_EXLM, KC_PIPE,       KC_BSLS, KC_AT  , KC_SCLN, KC_DQUO, QK_BOOT,
-      CIW, COLON, PANIC, KC_TRNS),
+      KC_LBRC, KC_LCBR, KC_LPRN, KC_RBRC, CHNGDIR,       KC_CIRC, KC_HASH, KC_RPRN, KC_RCBR, KC_TILD,
+      KC_EXLM, KC_PLUS, KC_MINS, KC_DQUO, KC_AMPR,       KC_UNDS, KC_DLR , KC_LSFT, KC_RABK, KC_QUES,
+      KC_PERC, KC_ASTR, KC_SCLN, KC_GRV , KC_PIPE,       KC_BSLS, KC_AT  , KC_COLN, KC_LABK, QK_BOOT,
+      KC_EQL , KC_LGUI, PANIC, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
       KC_F7  , KC_F5  , KC_F3  , KC_F1  , KC_F9,         KC_F8 , KC_F10 , KC_F2  , KC_F4  , KC_F6  ,
@@ -102,15 +102,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
         return false;
 
-    case CIW:
+    case CHNGDIR:
         if (record->event.pressed) {
-            SEND_STRING("ciw");
-        }
-        return false;
-
-    case COLON:
-        if (record->event.pressed) {
-            SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)) ":");
+            SEND_STRING("../");
         }
         return false;
 
