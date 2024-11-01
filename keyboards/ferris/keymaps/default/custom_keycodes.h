@@ -8,8 +8,7 @@ enum keycodes {
    OS_SYM ,
    SL_NUMO,
    SL_NUMX,
-   DELETE ,
-   CHNGDIR,
+   GUIALT ,
    PANIC  ,
 };
 

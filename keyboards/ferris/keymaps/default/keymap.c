@@ -7,21 +7,12 @@
 
 enum combos {
     COMBO_ENTER,
-    COMBO_SHFTL,
-    COMBO_SHFTR,
     COMBO_LENGTH
 };
-
 uint16_t COMBO_LEN = COMBO_LENGTH;
-
 const uint16_t PROGMEM ENTER_COMBO[] = {KC_C, KC_P, COMBO_END};
-const uint16_t PROGMEM SHFTL_COMBO[] = {KC_T, KC_S, COMBO_END};
-const uint16_t PROGMEM SHFTR_COMBO[] = {KC_H, KC_A, COMBO_END};
-
 combo_t key_combos[] = {
     [COMBO_ENTER] = COMBO(ENTER_COMBO,        KC_ENT),
-    [COMBO_SHFTL] = COMBO(SHFTL_COMBO, OSM(MOD_LSFT)),
-    [COMBO_SHFTR] = COMBO(SHFTR_COMBO, OSM(MOD_LSFT)),
 };
 
 
@@ -34,14 +25,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
    [_UTL] = LAYOUT_split_3x5_2(
       CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_X ,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, REPEAT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, DELETE,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, GUIALT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, REPEAT,
       CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_S ,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , PANIC ,
       KC_TRNS, CW_TOGG, KC_ENT, SL_NUMO),
 
    [_SYM] = LAYOUT_split_3x5_2(
-      KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE,       KC_PERC, KC_HASH, KC_LBRC, KC_RABK, KC_LABK,
-      KC_SCLN, KC_COLN, KC_MINS, KC_DQUO, KC_TILD,       CHNGDIR, KC_UNDS, KC_DLR , KC_EXLM, KC_QUES,
-      KC_SLSH, KC_PLUS, KC_ASTR, KC_EQL , KC_AMPR,       KC_CIRC, KC_AT  , KC_RBRC, KC_BSLS, PANIC  ,
+      KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE,       KC_HASH, KC_PERC, KC_LBRC, KC_RABK, KC_LABK,
+      KC_COLN, KC_SLSH, KC_MINS, KC_DQUO, KC_TILD,       KC_UNDS, KC_DLR , KC_LSFT, KC_EXLM, KC_QUES,
+      KC_SCLN, KC_PLUS, KC_ASTR, KC_EQL , KC_AMPR,       KC_CIRC, KC_AT  , KC_RBRC, KC_BSLS, PANIC  ,
       KC_GRV , KC_LGUI, QK_BOOT, KC_TRNS),
 
    [_NUM] = LAYOUT_split_3x5_2(
@@ -57,6 +48,7 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
     {OS_UTL, KC_LALT},
     {OS_UTL, KC_LSFT},
     {OS_UTL, KC_LCTL},
+    {OS_SYM, KC_LSFT},
 };
 
 
@@ -67,7 +59,6 @@ const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-
    // DALLIUSD implementation of Callum Mods
    if (!update_flow(keycode, record->event.pressed, record->event.key)) return false;
 
@@ -78,24 +69,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
    process_layermodes(keycode, record);
 
    switch (keycode) {
-
-    /*
-    case LT(_NUM, KC_F15): // SHIFT on tap; Access NUM layer on hold
-        if (record->tap.count > 0) {
-            if (record->event.pressed) {
-                set_oneshot_mods(MOD_LSFT);
-            }
-            return false;
-        }
-        break;
-
-    case OS_WRK: // Sets default layer to _WRK;
-        if (record->event.pressed) {
-            default_layer_set(0x00000002); // Increment by 2 any succeeding alt layer
-        }
-        break;
-    */
-
     case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
         num_mode_enable(record);
         return false;
@@ -104,15 +77,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         num_mode_disable();
         return false;
 
-    case DELETE:
+    case GUIALT:
         if (record->event.pressed) {
-            SEND_STRING("f(" SS_DELAY(10) "d$");
-        }
-        return false;
-
-    case CHNGDIR:
-        if (record->event.pressed) {
-            SEND_STRING("../");
+            register_code(KC_LGUI);
+            register_code(KC_LALT);
+        } else {
+            unregister_code(KC_LGUI);
+            unregister_code(KC_LALT);
         }
         return false;
 
