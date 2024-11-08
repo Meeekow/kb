@@ -27,19 +27,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Q,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_UTL, KC_SPC, REPEAT, OS_SYM),
+      OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
   [_UTL] = LAYOUT_split_3x5_2(
       CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_U ,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, GUIALT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, CTL_L ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D ,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_ESC,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, GUIALT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, REPEAT,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D ,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CTL_L ,
       KC_TRNS, CW_TOGG, KC_ENT, SL_NUMO),
 
   [_SYM] = LAYOUT_split_3x5_2(
-      KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_LABK,       KC_SLSH, KC_AT  , KC_AMPR, KC_PIPE, KC_TILD,
-      KC_QUES, KC_EXLM, KC_MINS, KC_COLN, KC_GRV ,       KC_CIRC, KC_UNDS, KC_DLR , KC_PLUS, KC_ASTR,
-      KC_BSLS, KC_LBRC, KC_RBRC, KC_EQL , KC_RABK,       KC_PERC, KC_SCLN, KC_HASH, KC_DQUO, KC_PSCR,
-      KC_LGUI, KC_ESC, QK_BOOT, KC_TRNS),
+      KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_LABK,       KC_CIRC, KC_AMPR, KC_EXLM, KC_QUES, KC_PIPE,
+      KC_PLUS, KC_DQUO, KC_MINS, KC_COLN, KC_SCLN,       KC_PERC, KC_UNDS, KC_DLR , KC_SLSH, KC_ASTR,
+      KC_BSLS, KC_LBRC, KC_RBRC, KC_EQL , KC_RABK,       KC_AT  , KC_TILD, KC_HASH, KC_SLSH, KC_PSCR,
+      KC_GRV, KC_LGUI, QK_BOOT, KC_TRNS),
 
   [_NUM] = LAYOUT_split_3x5_2(
       KC_F7  , KC_F5  , KC_F3  , KC_F1  , KC_F9,         KC_F8 , KC_F10 , KC_F2  , KC_F4  , KC_F6  ,
