@@ -5,21 +5,8 @@
 #include "smart_layer.h"
 
 
-enum combos {
-  COMBO_LSHIFT,
-  COMBO_RSHIFT,
-  COMBO_LENGTH
-};
-
-uint16_t COMBO_LEN = COMBO_LENGTH;
-
-const uint16_t PROGMEM LSHFT_COMBO[]  = {KC_T, KC_S  , COMBO_END};
-const uint16_t PROGMEM RSHFT_COMBO[]  = {KC_H, KC_A  , COMBO_END};
-
-combo_t key_combos[] = {
-  [COMBO_LSHIFT] = COMBO(LSHFT_COMBO , OSM(MOD_LSFT)),
-  [COMBO_RSHIFT] = COMBO(RSHFT_COMBO , OSM(MOD_LSFT)),
-};
+combo_t key_combos[] = {};
+uint16_t COMBO_LEN = 0;
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -30,21 +17,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
   [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_U ,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, GUIALT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, REPEAT,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D ,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CTL_L ,
-      KC_TRNS, CW_TOGG, KC_ENT, SL_NUMO),
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_U ,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, GUIALT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, REPEAT ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D ,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_PSCR,
+      KC_TRNS, CW_TOGG, KC_ENT, SL_NUM),
 
   [_SYM] = LAYOUT_split_3x5_2(
       KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_LABK,       KC_CIRC, KC_AMPR, KC_EXLM, KC_QUES, KC_PIPE,
-      KC_PLUS, KC_DQUO, KC_MINS, KC_COLN, KC_SCLN,       KC_PERC, KC_UNDS, KC_DLR , KC_SLSH, KC_ASTR,
-      KC_BSLS, KC_LBRC, KC_RBRC, KC_EQL , KC_RABK,       KC_AT  , KC_TILD, KC_HASH, KC_SLSH, KC_PSCR,
-      KC_GRV, KC_LGUI, QK_BOOT, KC_TRNS),
+      KC_PLUS, KC_DQUO, KC_MINS, KC_COLN, KC_SCLN,       KC_PERC, KC_UNDS, KC_LSFT, KC_DLR , KC_ASTR,
+      KC_BSLS, KC_LBRC, KC_RBRC, KC_EQL , KC_RABK,       KC_AT  , KC_TILD, KC_HASH, KC_NO  , KC_NO  ,
+      KC_GRV, KC_LGUI, KC_TRNS, KC_TRNS),
 
   [_NUM] = LAYOUT_split_3x5_2(
-      KC_F7  , KC_F5  , KC_F3  , KC_F1  , KC_F9,         KC_F8 , KC_F10 , KC_F2  , KC_F4  , KC_F6  ,
-      KC_7   , KC_5   , KC_3   , KC_1   , KC_9 ,         KC_8  , KC_0   , KC_2   , KC_4   , KC_6   ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_PLUS, KC_MINS, KC_ASTR, KC_SLSH,
+      KC_F7  , KC_F5  , KC_F3  , KC_F1  , KC_F9,         KC_F8 , KC_F10, KC_F2, KC_F4, KC_F6  ,
+      KC_7   , KC_5   , KC_3   , KC_1   , KC_9 ,         KC_8  , KC_0  , KC_2 , KC_4 , KC_6   ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_NO , KC_NO, KC_NO, QK_BOOT,
       PANIC, KC_TRNS, KC_ENT, KC_BSPC),
 };
 
@@ -75,7 +62,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
   process_layermodes(keycode, record);
 
   switch (keycode) {
-    case SL_NUMO: // TURN ON SMART LAYER FOR _NUM LAYER
+    case SL_NUM: // TURN ON SMART LAYER FOR _NUM LAYER
       num_mode_enable(record);
       return false;
 

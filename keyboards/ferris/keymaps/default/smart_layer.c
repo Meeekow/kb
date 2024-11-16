@@ -35,7 +35,6 @@ void num_mode_process(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_LCTL ... KC_LGUI:
         case KC_1 ... KC_0:
-        case CTL_BS:
         case KC_BSPC:
             // Process the code and stay in the mode *dabs*
             break;

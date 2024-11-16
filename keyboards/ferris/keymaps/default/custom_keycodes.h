@@ -6,7 +6,7 @@ enum keycodes {
    REPEAT = SAFE_RANGE,
    OS_UTL ,
    OS_SYM ,
-   SL_NUMO,
+   SL_NUM ,
    GUIALT ,
    PANIC  ,
 };
@@ -25,7 +25,6 @@ enum layers {
 #define CTL_C C(KC_C)
 #define CTL_D C(KC_D)
 #define CTL_I C(KC_I)
-#define CTL_L C(KC_L)
 #define CTL_R C(KC_R)
 #define CTL_U C(KC_U)
 #define CTL_V C(KC_V)

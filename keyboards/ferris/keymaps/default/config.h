@@ -66,8 +66,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // flow_layers_config
 #define FLOW_LAYERS_COUNT 2
 
-// How quickly all combo keys must be pressed in succession to trigger
-#define COMBO_TERM 20
-
-// Combo keys are always checked from layer 0, even if other layers are active
-#define COMBO_ONLY_FROM_LAYER 0
