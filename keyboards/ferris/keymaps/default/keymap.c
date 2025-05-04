@@ -11,28 +11,28 @@ uint16_t COMBO_LEN = 0;
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_ABC] = LAYOUT_split_3x5_2(
-      KC_B, KC_L, KC_D, KC_W, KC_Q,                      KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
-      KC_N, KC_R, KC_T, KC_S, KC_G,                      KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
-      KC_Z, KC_X, KC_M, KC_C, KC_V,                      KC_K, KC_P, KC_DOT, KC_QUOT, KC_SLSH,
-      OS_UTL, KC_SPC, KC_ESC, OS_SYM),
+      KC_B, KC_L, KC_D, KC_W, KC_Q,                     KC_J, KC_F, KC_O  , KC_U   , KC_ESC,
+      KC_N, KC_R, KC_T, KC_S, KC_G,                     KC_Y, KC_H, KC_A  , KC_E   , KC_I  ,
+      _OSS, KC_X, KC_M, KC_C, KC_V,                     KC_K, KC_P, KC_DOT, KC_COMM, _OSS  ,
+      OS_UTL, KC_SPC, NMBR, SYMB),
 
   [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_U ,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, GUIALT,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, REPEAT ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D ,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , KC_PSCR,
-      KC_TRNS, CW_TOGG, KC_ENT, SL_NUM),
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_U ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , PANIC  ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, GUIALT,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, KC_DEL ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_D ,       CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CW_TOGG,
+      KC_TRNS, KC_PSCR, KC_ENT, SL_NUM),
 
   [_SYM] = LAYOUT_split_3x5_2(
-      KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR, KC_PIPE,       KC_HASH, KC_AT  , KC_LBRC, KC_RBRC, KC_CIRC,
-      KC_EXLM, KC_DQUO, KC_MINS, KC_COLN, KC_SCLN,       KC_PERC, KC_UNDS, KC_LSFT, KC_DLR , KC_QUES,
-      KC_TILD, KC_PLUS, KC_ASTR, KC_SLSH, KC_AMPR,       KC_BSLS, KC_LABK, KC_EQL , KC_RABK, KC_TRNS,
-      KC_GRV, KC_LGUI, KC_TRNS, KC_TRNS),
+      KC_CIRC, KC_LBRC, KC_LPRN, KC_LCBR, KC_PIPE,      KC_NO, KC_RCBR, KC_RPRN, KC_RBRC, PANIC ,
+      KC_TILD, KC_UNDS, KC_DQUO, KC_COLN, KC_HASH,      KC_AT, KC_EXLM, KC_QUES, KC_BSLS, REPEAT,
+      KC_Z   , KC_DLR , KC_QUOT, KC_SCLN, KC_AMPR,      KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO ,
+      KC_GRV, KC_LGUI, MS_BTN1, KC_TRNS),
 
   [_NUM] = LAYOUT_split_3x5_2(
-      KC_F7  , KC_F5  , KC_F3  , KC_F1  , KC_F9,         KC_F8 , KC_F10, KC_F2, KC_F4, KC_F6  ,
-      KC_7   , KC_5   , KC_3   , KC_1   , KC_9 ,         KC_8  , KC_0  , KC_2 , KC_4 , KC_6   ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_F11,        KC_F12, KC_NO , KC_NO, KC_NO, QK_BOOT,
-      PANIC, KC_TRNS, KC_ENT, KC_BSPC),
+      KC_NO, KC_LABK, KC_EQL , KC_RABK, KC_NO  ,        KC_NO, KC_7, KC_8, KC_9, PANIC,
+      KC_NO, KC_MINS, KC_EQL , KC_PLUS, KC_ENT ,        KC_NO, KC_0, KC_1, KC_2, KC_3 ,
+      KC_NO, KC_PERC, KC_ASTR, KC_SLSH, KC_BSPC,        KC_NO, KC_4, KC_5, KC_6, KC_NO,
+      QK_BOOT, KC_TRNS, KC_TRNS, KC_TRNS),
 };
 
 
@@ -41,13 +41,11 @@ const uint16_t flow_config[FLOW_COUNT][2] = {
   {OS_UTL, KC_LALT},
   {OS_UTL, KC_LSFT},
   {OS_UTL, KC_LCTL},
-  {OS_SYM, KC_LSFT},
 };
 
 
 const uint16_t flow_layers_config[FLOW_LAYERS_COUNT][2] = {
   {OS_UTL, _UTL},
-  {OS_SYM, _SYM},
 };
 
 

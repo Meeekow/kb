@@ -33,9 +33,16 @@ void num_mode_disable(void) {
 void num_mode_process(uint16_t keycode, keyrecord_t *record) {
     // Define what keys will exit num mode.
     switch (keycode) {
-        case KC_LCTL ... KC_LGUI:
         case KC_1 ... KC_0:
+        case KC_EQL:
         case KC_BSPC:
+        case KC_LABK:
+        case KC_RABK:
+        case KC_PLUS:
+        case KC_MINS:
+        case KC_ASTR:
+        case KC_SLSH:
+        case KC_PERC:
             // Process the code and stay in the mode *dabs*
             break;
         default:

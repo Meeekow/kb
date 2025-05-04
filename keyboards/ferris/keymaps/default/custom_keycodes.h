@@ -5,7 +5,6 @@
 enum keycodes {
    REPEAT = SAFE_RANGE,
    OS_UTL ,
-   OS_SYM ,
    SL_NUM ,
    GUIALT ,
    PANIC  ,
@@ -35,4 +34,11 @@ enum layers {
 // TAB
 #define TAB_BCK C(S(KC_TAB))
 #define TAB_FWD C(KC_TAB)
+
+// ONE SHOT
+#define _OSS OSM(MOD_LSFT)
+
+// MOMENTARY
+#define NMBR MO(_NUM)
+#define SYMB MO(_SYM)
 
