@@ -24,8 +24,8 @@ void num_mode_enable(keyrecord_t *record) {
 
 // Turn number mode off.
 void num_mode_disable(void) {
-    _num_mode_active = false;
     layer_off(_NUM);
+    _num_mode_active = false;
 }
 
 
