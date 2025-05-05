@@ -31,6 +31,9 @@ enum layers {
 #define CTL_Z C(KC_Z)
 #define CTL_BS C(KC_BSPC)
 
+// CTRL + SHFT
+#define CTSFA C(S(KC_A))
+
 // TAB
 #define TAB_BCK C(S(KC_TAB))
 #define TAB_FWD C(KC_TAB)

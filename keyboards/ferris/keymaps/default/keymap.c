@@ -20,12 +20,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, IMPT   ,      KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL ,
       KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, MS_BTN1,      KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, REPEAT ,
       CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_F  ,      CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CW_TOGG,
-      PANIC, KC_PSCR, KC_ENT, SL_NUM),
+      PANIC, CTSFA, KC_ENT, SL_NUM),
 
   [_SYM] = LAYOUT_split_3x5_2(
       KC_BSLS, KC_UNDS, KC_DLR , KC_EXLM, KC_QUES,      KC_NO, KC_CIRC, KC_LBRC, KC_RBRC, KC_NO  ,
       KC_TILD, KC_DQUO, KC_COLN, KC_SLSH, KC_SCLN,      KC_NO, KC_LCBR, KC_LPRN, KC_RPRN, KC_RCBR,
-      KC_Z   , KC_HASH, KC_AMPR, KC_PIPE, KC_AT  ,      KC_NO, KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
+      KC_Z   , KC_HASH, KC_AMPR, KC_PIPE, KC_AT  ,      KC_NO, KC_NO  , KC_PSCR, KC_NO  , KC_NO  ,
       KC_GRV, KC_LGUI, KC_TRNS, PANIC),
 
   [_NUM] = LAYOUT_split_3x5_2(
