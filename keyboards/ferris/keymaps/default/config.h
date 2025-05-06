@@ -61,8 +61,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define USB_VBUS_PIN GP19
 
 // flow_config
-#define FLOW_COUNT 4
+#define FLOW_COUNT 5
 
 // flow_layers_config
-#define FLOW_LAYERS_COUNT 1
+#define FLOW_LAYERS_COUNT 2
 

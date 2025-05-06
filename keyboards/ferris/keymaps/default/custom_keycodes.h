@@ -5,6 +5,7 @@
 enum keycodes {
    REPEAT = SAFE_RANGE,
    OS_UTL ,
+   OS_SYM ,
    SL_NUM ,
    GUIALT ,
    PANIC  ,
@@ -33,15 +34,12 @@ enum layers {
 
 // CTRL + SHFT
 #define CTSFA C(S(KC_A))
+#define CTSFV C(S(KC_V))
 
 // TAB
 #define TAB_BCK C(S(KC_TAB))
 #define TAB_FWD C(KC_TAB)
 
-// ONE SHOT
-#define _OSS OSM(MOD_LSFT)
-
 // MOMENTARY
-#define SYMB MO(_SYM)
 #define IMPT MO(_IMP)
 
