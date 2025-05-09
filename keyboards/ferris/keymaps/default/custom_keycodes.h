@@ -34,7 +34,6 @@ enum layers {
 
 // CTRL + SHFT
 #define CTSFA C(S(KC_A))
-#define CTSFV C(S(KC_V))
 
 // TAB
 #define TAB_BCK C(S(KC_TAB))
