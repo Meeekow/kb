@@ -34,6 +34,7 @@ void num_mode_process(uint16_t keycode, keyrecord_t *record) {
     // Define what keys will exit num mode.
     switch (keycode) {
         case KC_1 ... KC_0:
+	case KC_BSPC:
             // Process the code and stay in the mode *dabs*
             break;
         default:
