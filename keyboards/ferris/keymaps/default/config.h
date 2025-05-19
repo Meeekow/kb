@@ -28,12 +28,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // It makes sense to use the same delay for the mouseweel
 #define MOUSEKEY_WHEEL_DELAY 100
 // The default is 100
-#define MOUSEKEY_WHEEL_INTERVAL 100
+#define MOUSEKEY_WHEEL_INTERVAL 50
 // The default is 40
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 100
 // Added
-//#define MOUSEKEY_WHEEL_DELTA 1
-//#define MOUSEKEY_WHEEL_MAX_SPEED 8
+#define MOUSEKEY_WHEEL_DELTA 1
+#define MOUSEKEY_WHEEL_MAX_SPEED 8
 
 // Pick good defaults for enabling homerow modifiers
 #define TAPPING_TERM 200

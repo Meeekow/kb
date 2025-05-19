@@ -8,6 +8,7 @@ enum keycodes {
    OS_SYM ,
    SL_NUM ,
    GUIALT ,
+   GUICTL ,
    PANIC  ,
 };
 
@@ -30,6 +31,7 @@ enum layers {
 #define CTL_S C(KC_S)
 #define CTL_V C(KC_V)
 #define CTL_W C(KC_W)
+#define CTL_Y C(KC_Y)
 #define CTL_Z C(KC_Z)
 #define CTL_BS C(KC_BSPC)
 

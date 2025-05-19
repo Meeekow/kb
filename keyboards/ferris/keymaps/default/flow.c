@@ -30,13 +30,13 @@ typedef enum {
 #ifdef FLOW_ONESHOT_TERM
 const int g_flow_oneshot_term = FLOW_ONESHOT_TERM;
 #else
-const int g_flow_oneshot_term = 500;
+const int g_flow_oneshot_term = 400;
 #endif
 
 #ifdef FLOW_ONESHOT_WAIT_TERM
 const int g_flow_oneshot_wait_term = FLOW_ONESHOT_WAIT_TERM;
 #else
-const int g_flow_oneshot_wait_term = 500;
+const int g_flow_oneshot_wait_term = 400;
 #endif
 
 flow_state_t flow_state[FLOW_COUNT] = { [0 ... FLOW_COUNT - 1] = flow_up_unqueued };
