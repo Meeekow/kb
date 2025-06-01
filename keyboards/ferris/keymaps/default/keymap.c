@@ -14,12 +14,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_B, KC_L, KC_D, KC_W, KC_Q,                     KC_J, KC_F, KC_O  , KC_U   , KC_COMM,
       KC_N, KC_R, KC_T, KC_S, KC_G,                     KC_Y, KC_H, KC_A  , KC_E   , KC_I   ,
       KC_Z, KC_X, KC_M, KC_C, KC_V,                     KC_K, KC_P, KC_DOT, KC_QUOT, KC_SCLN,
-      OS_UTL, KC_SPC, REPEAT, OS_SYM),
+      OS_UTL, KC_SPC, KC_ESC, OS_SYM),
 
   [_UTL] = LAYOUT_split_3x5_2(
-      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_Y ,       KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL ,
-      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, KC_ESC,       KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, CTL_S  ,
-      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_F ,       CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CW_TOGG,
+      CTL_R  , CTL_W  , TAB_BCK, TAB_FWD, CTL_S,        KC_HOME, KC_PGDN, KC_PGUP, KC_END , KC_DEL ,
+      KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL, STT  ,        KC_LEFT, KC_DOWN, KC_UP  , KC_RGHT, REPEAT ,
+      CTL_Z  , CTL_A  , CTL_C  , CTL_V  , CTL_F,        CTL_I  , CTL_BS , KC_BSPC, KC_TAB , CW_TOGG,
       PANIC, CTSFA, KC_ENT, SL_NUM),
 
   [_SYM] = LAYOUT_split_3x5_2(
