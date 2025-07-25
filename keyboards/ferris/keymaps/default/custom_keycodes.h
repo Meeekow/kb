@@ -4,12 +4,11 @@
 
 enum keycodes {
    REPEAT = SAFE_RANGE,
-   OS_UTL ,
-   OS_SYM ,
-   SL_NUM ,
-   GUIALT ,
-   GUICTL ,
-   PANIC  ,
+   ALTREP,
+   OS_UTL,
+   OS_SYM,
+   SL_NUM,
+   PANIC ,
 };
 
 
@@ -32,10 +31,8 @@ enum layers {
 #define CTL_V C(KC_V)
 #define CTL_W C(KC_W)
 #define CTL_Z C(KC_Z)
+#define CTL_F5 C(KC_F5)
 #define CTL_BS C(KC_BSPC)
-
-// CTRL + SHFT
-#define CTSFA C(S(KC_A))
 
 // TAB
 #define TAB_BCK C(S(KC_TAB))
@@ -45,4 +42,5 @@ enum layers {
 #define IMPT MO(_IMP)
 
 // SPEECH TO TEXT
-#define STT A(KC_Q)
+#define USTT G(KC_SPC)
+#define CSTT C(KC_SPC)
